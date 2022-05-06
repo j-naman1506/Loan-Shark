@@ -1,12 +1,26 @@
-import "./App.css";
-
-import logo from "./logo.svg";
-import { useState } from "react";
-
+import "./static/templates/styles.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "../src/Components/LoginComps/login";
 function App() {
-	const [count, setCount] = useState(0);
-
-	return <div className="App"></div>;
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          {/* <Route
+            path="/login"
+            exact
+            render={(props) => <HandleLogin loginPanel {...props} />}
+          />
+          <Route
+            path="/register"
+            exact
+            render={(props) => <HandleLogin {...props} />}
+          /> */}
+          <Route path="/" exact element={<Login />} />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
