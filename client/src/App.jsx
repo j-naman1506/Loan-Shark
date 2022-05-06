@@ -2,12 +2,14 @@ import "./App.css";
 
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
+import Register from "./components/Register";
 
 function App() {
 	return (
 		<div className="App w-screen min-h-screen">
 			<Navbar />
-			<Login />
+			{/* <Login /> */}
+			<Register />
 		</div>
 	);
 }
