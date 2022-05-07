@@ -10,6 +10,12 @@ const Navbar = () => {
 					<li>
 						<a href="/register">Register</a>
 					</li>
+					<li>
+						<a href="/logout">Logout</a>
+					</li>
+					<li>
+						<a href="/profile">Profile</a>
+					</li>
 				</ul>
 			</div>
 		</div>
