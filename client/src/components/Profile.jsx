@@ -132,6 +132,15 @@ const Profile = () => {
 									Clear
 								</Button>
 							</ButtonGroup>
+							<Button
+								// isLoading
+								loadingText="Deleting"
+								colorScheme="red"
+								// variant="filled"
+								className="w-fit mx-auto"
+							>
+								Delete Profile
+							</Button>
 						</form>
 					</div>
 				</GridItem>
