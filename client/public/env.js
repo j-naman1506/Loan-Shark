@@ -41,7 +41,7 @@ window.env = {
   "npm_config_allow_same_version": "",
   "npm_config_also": "",
   "npm_config_always_auth": "",
-  "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"start\"],\"original\":[\"run\",\"start\"]}",
+  "npm_config_argv": "{\"remain\":[],\"cooked\":[\"start\"],\"original\":[\"start\"]}",
   "npm_config_audit": "true",
   "npm_config_audit_level": "low",
   "npm_config_auth_type": "legacy",

@@ -11,6 +11,7 @@ import {
   NumberInputField,
   NumberInputStepper,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import {
   DatePicker,
   DesktopDatePicker,
@@ -20,6 +21,28 @@ import {
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 const Register = () => {
+  const [userData, setUserData] = useState({
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    age: "",
+    password: "",
+  });
+
+  function handleChange(e) {
+    var tem = userData;
+    if (!e.target) {
+      tem.age = e;
+    } else tem[e.target.name] = e.target.value;
+
+    setUserData(tem);
+  }
+
+  function HandleSubmit() {
+    console.log(userData);
+  }
+
   return (
     <div className="w-1/3 h-full mt-24 mx-auto p-8 rounded-md flex gap-8 flex-col shadow-lg ">
       <Heading
@@ -33,28 +56,49 @@ const Register = () => {
       <form className="mt-auto flex flex-col gap-8 ">
         <FormControl>
           <FormLabel htmlFor="username">Username</FormLabel>
-          <Input id="username" type="text" />
+          <Input
+            id="username"
+            type="text"
+            name="username"
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="first_name">First Name</FormLabel>
-          <Input id="first_name" type="text" />
+          <Input
+            id="first_name"
+            type="text"
+            name="first_name"
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="last_name">Last Name</FormLabel>
-          <Input id="last_name" type="text" />
+          <Input
+            id="last_name"
+            type="text"
+            name="last_name"
+            onChange={handleChange}
+          />
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="email">Email Address</FormLabel>
-          <Input id="email" type="email" />
+          <Input id="email" type="email" name="email" onChange={handleChange} />
           <FormHelperText>We'll never share your email.</FormHelperText>
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="age">Age</FormLabel>
-          <NumberInput id="age" min={0} max={100}>
+          <NumberInput
+            id="age"
+            min={0}
+            max={100}
+            name="age"
+            onChange={handleChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -71,12 +115,17 @@ const Register = () => {
 				</LocalizationProvider> */}
 
         <FormControl>
-          <FormLabel htmlFor="email">Password</FormLabel>
-          <Input id="email" type="email" />
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            onChange={handleChange}
+          />
           <FormHelperText>Choose a strong one.</FormHelperText>
         </FormControl>
 
-        <Button colorScheme="cyan" size="md">
+        <Button colorScheme="cyan" size="md" onClick={HandleSubmit}>
           Register
         </Button>
         {/* <hr className="font-bold w-full border-t-1 border-gray-300" />
