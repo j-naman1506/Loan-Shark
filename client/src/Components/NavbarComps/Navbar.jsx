@@ -1,4 +1,5 @@
 // Chakra UI components which uses tailwaind to create a navbar
+
 const Navbar = () => {
   return (
     <div className="bg-cyan-500 text-white py-4 px-8 flex justify-between items-center">
