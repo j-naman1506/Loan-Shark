@@ -1,11 +1,17 @@
 import "./App.css";
 
-import { useState } from "react";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Register from "./components/Register";
 
 function App() {
-	const [count, setCount] = useState(0);
-
-	return <div className="text-cyan-800 text-4xl">Hello</div>;
+	return (
+		<div className="w-screen min-h-screen">
+			<Navbar />
+			{/* <Login /> */}
+			<Register />
+		</div>
+	);
 }
 
 export default App;
