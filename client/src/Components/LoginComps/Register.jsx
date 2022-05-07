@@ -86,6 +86,7 @@ const Register = () => {
             id="username"
             type="text"
             name="username"
+            value={userData.username}
             onChange={handleChange}
           />
         </FormControl>
