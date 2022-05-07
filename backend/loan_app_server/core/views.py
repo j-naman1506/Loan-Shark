@@ -1,4 +1,3 @@
-from email import message
 import os
 import sys
 from requests.exceptions import HTTPError
@@ -7,7 +6,6 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from core.renderers import Response
-from datetime import datetime
 from social_django.utils import psa
 
 from rest_framework import status, authentication, permissions, generics
@@ -18,7 +16,7 @@ from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 
 from core.models import Profile
-from core.serializers import ProfileSerializer, ChangePasswordSerializer, UserSerializer, SocialSerializer
+from core.serializers import ProfileSerializer, ChangePasswordSerializer, SocialSerializer
 # Create your views here.
 
 def response_format(data, status, message):
@@ -97,6 +95,10 @@ def login(request):
     """
     Login Function
     :param request:
+    data : {
+        email: "",
+        password: ""
+    }
     :return:
     """
 
@@ -281,6 +283,13 @@ class ProfileAPIView(APIView):
     def post(self, request):
         """
         Update profile data / Uploaded  profile image
+        data : {
+            first_name: "",
+            last_name: "",
+            age: "",
+            location: "",
+            gender: ""
+        }
         """
         data = ""
         try:
@@ -312,6 +321,13 @@ class ProfileAPIView(APIView):
 class AddUserAPIView(APIView):
     """
     Add User details
+    data : {
+            email : "",
+            password: "",
+            first_name: "",
+            last_name: "",
+            age: "",
+        }
     """
     authentication_classes = (authentication.TokenAuthentication,)  # authentication.TokenAuthentication,
     permission_classes = (permissions.AllowAny,)  # permissions.IsAuthenticated,
