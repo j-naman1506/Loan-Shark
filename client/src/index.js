@@ -8,7 +8,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 
 ReactDOM.render(
-  <ChakraProvider theme={theme}>
+  <ChakraProvider>
     <Provider store={store}>
       <React.StrictMode>
         <App />
