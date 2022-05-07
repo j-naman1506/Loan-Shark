@@ -7,7 +7,7 @@ import Home from "./Components/DashboardComps/Home";
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-shade-0 w-screen min-h-screen overflow-x-hidden">
       <Navbar></Navbar>
       <Router>
         <Routes>
