@@ -31,42 +31,57 @@ const Register = () => {
   });
 
   function handleChange(e) {
-    var tem = userData;
     if (!e.target) {
-      tem.age = e;
-    } else tem[e.target.name] = e.target.value;
-
-    setUserData(tem);
+      setUserData((prevState) => ({
+        ...prevState,
+        age: e,
+      }));
+    } else {
+      setUserData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
   }
 
   function HandleSubmit() {
     console.log(userData);
-    e.preventDefault();
-    async function doRegister() {
-      const request = await axios.post(requests["doRegister"], userData);
-      return request;
+    if (
+      !userData.username ||
+      !userData.first_name ||
+      !userData.last_name ||
+      !userData.email ||
+      !userData.age ||
+      !userData.password
+    ) {
+      alert("All Fields are Mandatory");
+    } else {
+      //   e.preventDefault();
+      //   async function doRegister() {
+      //     const request = await axios.post(requests["doRegister"], userData);
+      //     return request;
+      //   }
+      //   doRegister()
+      //     .then((res) => {
+      //       const data = res.data.data;
+      //       console.log(data);
+      //       const { token: token, profile: userinfo } = res.data;
+      //       const init = {
+      //         username: "",
+      //         first_name: "",
+      //         last_name: "",
+      //         email: "",
+      //         age: "",
+      //         password: "",
+      //       };
+      //       setUserData(init);
+      //       window.location.href = "/";
+      //       dispatch(signInSuccess({ token, userinfo }));
+      //     })
+      //     .catch((e) => {
+      //       console.log(e.data);
+      //     });
     }
-    doRegister()
-      .then((res) => {
-        const data = res.data.data;
-        console.log(data);
-        const { token: token, profile: userinfo } = res.data;
-        const init = {
-          username: "",
-          first_name: "",
-          last_name: "",
-          email: "",
-          age: "",
-          password: "",
-        };
-        setUserData(init);
-        window.location.href = "/";
-
-        dispatch(signInSuccess({ token, userinfo }));
-      })
-      .catch((e) => {
-        console.log(e.data);
-      });
   }
 
   return (
@@ -97,6 +112,7 @@ const Register = () => {
             id="first_name"
             type="text"
             name="first_name"
+            value={userData.first_name}
             onChange={handleChange}
           />
         </FormControl>
@@ -107,13 +123,20 @@ const Register = () => {
             id="last_name"
             type="text"
             name="last_name"
+            value={userData.last_name}
             onChange={handleChange}
           />
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="email">Email Address</FormLabel>
-          <Input id="email" type="email" name="email" onChange={handleChange} />
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            value={userData.email}
+            onChange={handleChange}
+          />
           <FormHelperText>We'll never share your email.</FormHelperText>
         </FormControl>
 
@@ -124,6 +147,7 @@ const Register = () => {
             min={0}
             max={100}
             name="age"
+            value={userData.age}
             onChange={handleChange}
           >
             <NumberInputField />
@@ -147,6 +171,7 @@ const Register = () => {
             id="password"
             type="password"
             name="password"
+            value={userData.password}
             onChange={handleChange}
           />
           <FormHelperText>Choose a strong one.</FormHelperText>
