@@ -72,7 +72,7 @@ window.env = {
   "XDG_DATA_DIRS": "/usr/share/pop:/usr/share/gnome:/home/abhishek/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop",
   "npm_config_global_prefix": "/usr/local",
   "STARSHIP_SESSION_KEY": "1434422130280632",
-  "npm_command": "start",
+  "npm_command": "run-script",
   "INIT_CWD": "/home/abhishek/Programming/Projects/Flipr-Loan-App/client",
   "EDITOR": "vi",
   "REACT_APP_SERVER_URL": "http://localhost:8000",
