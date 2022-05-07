@@ -29,26 +29,29 @@ const Login = () => {
       username: email,
       password: password,
     };
-    console.log(senddata);
-    // e.preventDefault();
-    // async function doLogin() {
-    //   const request = await axios.post(requests["doLogin"], senddata);
-    //   return request;
-    // }
-    // doLogin()
-    //   .then((res) => {
-    //     const data = res.data;
-    //     console.log(data);
-    //     const { token: token, profile: userinfo } = res.data;
-    //     setemail("");
-    //     setpassword("");
-    //     window.location.href = "/";
-    //     dispatch(signInSuccess({ token, userinfo }));
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //     window.location.href = "/login";
-    //   });
+    if (!senddata.username || !senddata.password) {
+      alert("All Fields are Mandatory");
+    } else {
+      // e.preventDefault();
+      // async function doLogin() {
+      //   const request = await axios.post(requests["doLogin"], senddata);
+      //   return request;
+      // }
+      // doLogin()
+      //   .then((res) => {
+      //     const data = res.data;
+      //     console.log(data);
+      //     const { token: token, profile: userinfo } = res.data;
+      //     setemail("");
+      //     setpassword("");
+      //     window.location.href = "/";
+      //     dispatch(signInSuccess({ token, userinfo }));
+      //   })
+      //   .catch((e) => {
+      //     alert("Something Went Wrong");
+      //     window.location.href = "/login";
+      //   });
+    }
   }
   function responseGoogleSuccess(resp) {
     // console.log(resp.mc.access_token);
