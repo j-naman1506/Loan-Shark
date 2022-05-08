@@ -3,7 +3,9 @@
 const Navbar = () => {
 	return (
 		<div className="bg-shade-700 py-4 px-32 flex justify-between items-center shadow-lg">
-			<div className="font-bold text-white text-3xl font-ubuntu">Loan App</div>
+			<div className="font-bold text-white text-3xl font-ubuntu">
+				<a href="/">Loan App</a>
+			</div>
 			<div className="flex-grow">
 				<ul className="flex justify-end gap-10 text-shade-100">
 					<li>
