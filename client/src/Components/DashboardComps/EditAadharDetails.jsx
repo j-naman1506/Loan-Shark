@@ -1,25 +1,18 @@
 import "@react-pdf-viewer/core/lib/styles/index.css";
 
-import {
-	ArrowBackIcon,
-	ArrowForwardIcon,
-	ArrowLeftIcon,
-	ArrowRightIcon,
-} from "@chakra-ui/icons";
+import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import {
 	Button,
 	ButtonGroup,
 	FormControl,
 	FormLabel,
 	Heading,
-	IconButton,
 	Input,
-	Text,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import { Viewer } from "@react-pdf-viewer/core";
 import { shade } from "./../../static/templates/colors";
-import { useState } from "react";
 
 const EditAadharDetails = ({
 	stage,
@@ -30,6 +23,11 @@ const EditAadharDetails = ({
 }) => {
 	const [aadharUrl, setAadharUrl] = useState(null);
 	const [panUrl, setPanUrl] = useState(null);
+	const [peronsalDetails, setDetails] = useState();
+
+	useEffect(() => {
+		setDetails(profile);
+	}, []);
 
 	const onAadharChange = (e) => {
 		const files = e.target.files;
@@ -41,8 +39,42 @@ const EditAadharDetails = ({
 		files.length > 0 && setPanUrl(URL.createObjectURL(files[0]));
 	};
 
+	function handleChange(e) {
+		setDetails((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	}
+	function handleFileChange(e) {
+		let fileurl = URL.createObjectURL(e.target.files[0]);
+		setDetails((prevState) => ({
+			...prevState,
+			[e.target.id]: e.target.files[0],
+			[e.target.name]: fileurl,
+		}));
+	}
+	function handleContinue() {
+		console.log(peronsalDetails);
+		setProfile((prevState) => ({
+			...profile,
+			...peronsalDetails,
+		}));
+		setStage(stage + 1);
+		console.log(profile);
+	}
+	function handleBack() {
+		console.log(peronsalDetails);
+		setProfile((prevState) => ({
+			...profile,
+			...peronsalDetails,
+		}));
+		setStage(stage - 1);
+		console.log(profile);
+	}
+
 	return (
 		<>
+			peronsalDetails && (
 			<div className="bg-shade-200 h-full w-full rounded-r-xl py-6 px-12 flex flex-col gap-4">
 				<Heading as="h2" size="xl" textAlign="center">
 					Aadhar & PAN Details
@@ -58,6 +90,12 @@ const EditAadharDetails = ({
 								borderColor={shade[800]}
 								_hover={{ borderColor: shade[900] }}
 								_active={{ borderColor: shade[900] }}
+								value={
+									peronsalDetails.aadhar_number
+										? peronsalDetails.aadhar_number
+										: ""
+								}
+								onChange={handleChange}
 								borderWidth={1}
 							/>
 						</FormControl>
@@ -71,6 +109,10 @@ const EditAadharDetails = ({
 								_hover={{ borderColor: shade[900] }}
 								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
+								value={
+									peronsalDetails.pan_number ? peronsalDetails.pan_number : ""
+								}
+								onChange={handleChange}
 							/>
 						</FormControl>
 					</div>
@@ -84,7 +126,6 @@ const EditAadharDetails = ({
 								id="aadhar_card"
 								type="file"
 								accept="application/pdf"
-								onChange={onAadharChange}
 								name="aadhar_card"
 								fontSize="lg"
 								padding="1"
@@ -92,6 +133,7 @@ const EditAadharDetails = ({
 								_hover={{ borderColor: shade[900] }}
 								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
+								onChange={handleFileChange}
 							/>
 						</FormControl>
 
@@ -103,7 +145,6 @@ const EditAadharDetails = ({
 								id="pan_card"
 								type="file"
 								accept="application/pdf"
-								onChange={onPanChange}
 								name="pan_card"
 								fontSize="lg"
 								padding="1"
@@ -111,6 +152,7 @@ const EditAadharDetails = ({
 								_hover={{ borderColor: shade[900] }}
 								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
+								onChange={handleFileChange}
 							/>
 						</FormControl>
 					</div>
@@ -150,7 +192,7 @@ const EditAadharDetails = ({
 								borderWidth: 1,
 							}}
 							size="md"
-							onClick={() => setStage(stage - 1)}
+							onClick={handleBack}
 						>
 							Back
 						</Button>
@@ -167,7 +209,7 @@ const EditAadharDetails = ({
 								borderWidth: 1,
 							}}
 							size="md"
-							onClick={() => setStage(stage + 1)}
+							onClick={handleContinue}
 						>
 							Continue
 						</Button>
@@ -183,6 +225,15 @@ const EditAadharDetails = ({
 								borderWidth: 1,
 							}}
 							size="md"
+							onClick={() => {
+								setDetails({
+									...profile,
+									aadhar_number: "",
+									aadhar_card: "",
+									pan_number: "",
+									pan_card: "",
+								});
+							}}
 						>
 							Clear
 						</Button>
@@ -206,6 +257,7 @@ const EditAadharDetails = ({
 					</ButtonGroup>
 				</form>
 			</div>
+			)
 		</>
 	);
 };
