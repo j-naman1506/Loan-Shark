@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaFemale } from "react-icons/fa";
 import { RiBankLine } from "react-icons/ri";
 import { useState, useEffect } from "react";
+import { MdOutlineDownloading } from "react-icons/md";
+import { Tooltip } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 const ProfileDetails = ({ startEditting }) => {
   const [editting, setEditting] = useState(false);
@@ -17,6 +19,7 @@ const ProfileDetails = ({ startEditting }) => {
   var userData = useSelector((state) => state.auth.userinfo);
   userData.aadhar_no = "125656782341";
   userData.account_no = "125656781234";
+  userData.pan_no = "125656781234";
   var aadhar_no =
     userData.aadhar_no
       .slice(0, userData.aadhar_no.length - 4)
@@ -29,12 +32,9 @@ const ProfileDetails = ({ startEditting }) => {
       .replace(/./g, "X") +
     userData.account_no.slice(userData.account_no.length - 4);
 
-  const saveFile = () => {
-    saveAs(
-      "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-      "example.pdf"
-    );
-  };
+  var pan_no =
+    userData.pan_no.slice(0, userData.pan_no.length - 4).replace(/./g, "X") +
+    userData.pan_no.slice(userData.pan_no.length - 4);
 
   console.log(userData);
   return (
@@ -72,19 +72,61 @@ const ProfileDetails = ({ startEditting }) => {
         >
           <Icon as={RiBankLine} />
           {account_no ? (
-            <span className="flex  gap-4">
+            <span className="flex  gap-4 items-center">
               <Text>{account_no}</Text>{" "}
-              <button onClick={saveFile}>Download</button>
             </span>
           ) : (
             "Not Provided"
           )}
         </Text>
 
-        <Text fontSize="2xl" className="font-roboto text-shade-4">
+        <Text
+          fontSize="2xl"
+          className="font-roboto text-shade-4 flex items-center gap-4"
+        >
           <Icon as={HiOutlineIdentification} />{" "}
-          {userData.aadhar_no ? aadhar_no : "Not Provided"}
+          {aadhar_no ? (
+            <span className="flex gap-4 items-center">
+              <Text>{aadhar_no}</Text>
+              <Icon
+                as={MdOutlineDownloading}
+                onClick={(e) => {
+                  saveAs(
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                    "aadhar.pdf"
+                  );
+                }}
+              />
+            </span>
+          ) : (
+            "Not Provided"
+          )}
         </Text>
+
+        <Tooltip label="PAN Card">
+          <Text
+            fontSize="2xl"
+            className="font-roboto text-shade-4 flex items-center gap-4"
+          >
+            <Icon as={HiOutlineIdentification} />{" "}
+            {pan_no ? (
+              <span className="flex gap-4 items-center">
+                <Text>{pan_no}</Text>
+                <Icon
+                  as={MdOutlineDownloading}
+                  onClick={(e) => {
+                    saveAs(
+                      "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                      "aadhar.pdf"
+                    );
+                  }}
+                />
+              </span>
+            ) : (
+              "Not Provided"
+            )}
+          </Text>
+        </Tooltip>
       </div>
       {/* </div> */}
     </>
