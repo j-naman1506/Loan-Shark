@@ -94,32 +94,33 @@ const ProfileDetails = ({ startEditting }) => {
             "Not Provided"
           )}
         </Text>
+        <Tooltip label="Aadhar Card" justifySelf="left">
+          <Text
+            fontSize="2xl"
+            className="font-roboto text-shade-4 flex items-center gap-4"
+            color={shade[800]}
+          >
+            <Icon as={HiOutlineIdentification} />{" "}
+            {aadhar_no ? (
+              <span className="flex gap-4 items-center">
+                <Text color={shade[800]}>{aadhar_no}</Text>
+                <Icon
+                  as={MdOutlineDownloading}
+                  onClick={(e) => {
+                    saveAs(
+                      "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                      "aadhar.pdf"
+                    );
+                  }}
+                />
+              </span>
+            ) : (
+              "Not Provided"
+            )}
+          </Text>
+        </Tooltip>
 
-        <Text
-          fontSize="2xl"
-          className="font-roboto text-shade-4 flex items-center gap-4"
-          color={shade[800]}
-        >
-          <Icon as={HiOutlineIdentification} />{" "}
-          {aadhar_no ? (
-            <span className="flex gap-4 items-center">
-              <Text color={shade[800]}>{aadhar_no}</Text>
-              <Icon
-                as={MdOutlineDownloading}
-                onClick={(e) => {
-                  saveAs(
-                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                    "aadhar.pdf"
-                  );
-                }}
-              />
-            </span>
-          ) : (
-            "Not Provided"
-          )}
-        </Text>
-
-        <Tooltip label="PAN Card">
+        <Tooltip label="PAN Card" justifySelf="left">
           <Text
             fontSize="2xl"
             className="font-roboto text-shade-4 flex items-center gap-4"
