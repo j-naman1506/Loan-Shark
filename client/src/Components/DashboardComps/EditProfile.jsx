@@ -1,4 +1,6 @@
+import EditAadharDetails from "./EditAadharDetails";
 import EditBankDetails from "./EditBankDetails";
+import EditPaySlips from "./EditPaySlips";
 import EditProfileDetails from "./EditProfileDetails";
 import { useState } from "react";
 
@@ -26,9 +28,25 @@ const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
 					/>
 				);
 			case 2:
-				return <EditAadharDetails />;
-			// case 3:
-			// 	return <EditPANDetails />;
+				return (
+					<EditAadharDetails
+						stage={stage}
+						setStage={setStage}
+						profile={profile}
+						setProfile={setProfile}
+						stopEditing={stopEditing}
+					/>
+				);
+			case 3:
+				return (
+					<EditPaySlips
+						stage={stage}
+						setStage={setStage}
+						profile={profile}
+						setProfile={setProfile}
+						stopEditing={stopEditing}
+					/>
+				);
 		}
 	};
 
