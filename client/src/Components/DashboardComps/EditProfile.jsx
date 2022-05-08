@@ -1,5 +1,6 @@
 import EditAadharDetails from "./EditAadharDetails";
 import EditBankDetails from "./EditBankDetails";
+import EditPaySlips from "./EditPaySlips";
 import EditProfileDetails from "./EditProfileDetails";
 import { useState } from "react";
 
@@ -36,8 +37,16 @@ const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
 						stopEditing={stopEditing}
 					/>
 				);
-			// case 3:
-			// 	return <EditPANDetails />;
+			case 3:
+				return (
+					<EditPaySlips
+						stage={stage}
+						setStage={setStage}
+						profile={profile}
+						setProfile={setProfile}
+						stopEditing={stopEditing}
+					/>
+				);
 		}
 	};
 

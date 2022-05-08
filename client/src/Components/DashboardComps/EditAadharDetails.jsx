@@ -44,6 +44,7 @@ const EditAadharDetails = ({
 						<Input
 							id="aadhar_card"
 							type="file"
+							accept="application/pdf"
 							name="aadhar_card"
 							fontSize="lg"
 							padding="1"
@@ -74,6 +75,7 @@ const EditAadharDetails = ({
 						<Input
 							id="pan_card"
 							type="file"
+							accept="application/pdf"
 							name="pan_card"
 							fontSize="lg"
 							padding="1"
