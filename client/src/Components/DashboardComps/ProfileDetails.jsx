@@ -99,7 +99,7 @@ const ProfileDetails = ({ startEditing }) => {
           color={shade[800]}
         >
           <Icon as={FaFemale} />{" "}
-          {userData.age ? `${userData.age} $ Years Old` : "Not Provided"}
+          {userData.age ? `${userData.age} Years Old` : "Not Provided"}
         </Text>
 
         <Text

@@ -209,7 +209,6 @@ window.env = {
   "npm_package_devDependencies__types_react_dom": "^18.0.0",
   "npm_package_devDependencies__vitejs_plugin_react": "^1.3.0",
   "npm_package_name": "client",
-  "npm_package_overrides_react_refresh": "0.12.0",
   "npm_package_private": "true",
   "npm_package_scripts_build": "react-dotenv && react-scripts build",
   "npm_package_scripts_eject": "react-scripts eject",
