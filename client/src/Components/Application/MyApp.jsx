@@ -2,24 +2,23 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import { shade } from "./../../static/templates/colors";
 import { useState } from "react";
+import AddApplication from "./AddApplication";
 const MyApp = () => {
   const [stage, setStage] = useState(0);
   const renderStage = (_stage) => {
     switch (_stage) {
       case 0:
-        return <div>0</div>;
+        return <AddApplication />;
       case 1:
-        return <p>1</p>;
+        return <AddApplication />;
       case 2:
-        return <p>2</p>;
+        return <AddApplication />;
     }
   };
   return (
-    <div className="flex m-12 shadow-lg rounded-lg">
+    <div className="flex m-3 rounded-lg  w-full h-full rounded-tr-lg">
       <Sidebar stage={stage} setStage={setStage} />
-      <div className="bg-shade-100 w-full h-full flex p-3 rounded-tr-lg">
-        {renderStage(stage)}
-      </div>
+      {renderStage(stage)}
     </div>
   );
 };

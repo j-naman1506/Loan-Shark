@@ -7,10 +7,11 @@ const Sidebar = ({ stage, setStage }) => {
   const iconButtons = [<RiNumber0 />, <RiNumber1 />, <RiNumber2 />];
   return (
     <>
-      <div className="flex flex-col h-full w-fit justify-evenly bg-shade-500 rounded-l-lg">
+      <div className="flex flex-col flex-grow h-full w-fit justify-stretch bg-shade-500 rounded-l-lg shadow-lg">
         {iconButtons.map((icon, index) => (
           <IconButton
             padding={"6"}
+            marginY={"auto"}
             variant="ghost"
             color={shade[100]}
             bgColor={index === stage && shade[700]}
