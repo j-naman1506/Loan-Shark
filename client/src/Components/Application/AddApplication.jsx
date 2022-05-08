@@ -15,6 +15,8 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import axios from "../utils/axios";
+import { requests } from "../utils/requests";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
 const AddApplication = () => {
@@ -31,7 +33,33 @@ const AddApplication = () => {
     }));
   }
   function HandleSubmit() {
-    console.log(application);
+    async function createApplication() {
+      const request = await axios({
+        method: "POST",
+        url: requests["createApplication"],
+        data: application,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return request;
+    }
+
+    createApplication()
+      .then((res) => {
+        const data = res.data.data;
+        console.log(data);
+        setApplication({
+          amount: "",
+          tenure: "",
+          interestRate: "",
+        });
+        alert("Done");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong");
+      });
   }
   return (
     <div className="bg-shade-200 h-full w-full rounded-r-xl rounded-bl-xl p-6 flex flex-col gap-4 shadow-lg text-shade-800">

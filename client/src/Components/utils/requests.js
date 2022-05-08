@@ -8,4 +8,5 @@ export const requests = {
   doOAuthLogin: "/auth/social/google-oauth2/",
   getDocuments: "/api/document/",
   getBankDetails: "/api/account/",
+  createApplication: "/api/application/",
 };

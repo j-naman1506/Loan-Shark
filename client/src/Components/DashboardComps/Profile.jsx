@@ -3,11 +3,16 @@ import { useEffect, useState } from "react";
 import EditProfile from "./EditProfile";
 import ProfileDetails from "./ProfileDetails";
 import Sidebar from "./Sidebar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  logOutSuccess,
+  signInSuccess,
+} from "../../store/modules/auth/auth.action";
 import { requests } from "../utils/requests";
 import axios from "../utils/axios";
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);
   const [stage, setStage] = useState(0);
   const [profile, setProfile] = useState({});
@@ -131,6 +136,8 @@ const Profile = () => {
       .then((res) => {
         const data = res.data.data;
         console.log(data);
+        const token = useSelector((state) => state.auth.token);
+        dispatch(signInSuccess({ token, data }));
         alert("Done");
       })
       .catch((e) => {
