@@ -1,17 +1,18 @@
-import { FiEdit3 } from "react-icons/fi";
-import { HiOutlineIdentification, HiOutlineMail } from "react-icons/hi";
 import { Button, Icon, Text } from "@chakra-ui/react";
+import { HiOutlineIdentification, HiOutlineMail } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
 import { FaFemale } from "react-icons/fa";
-import { RiBankLine } from "react-icons/ri";
-import { useState, useEffect } from "react";
+import { FiEdit3 } from "react-icons/fi";
+import { GoVerified } from "react-icons/go";
 import { MdOutlineDownloading } from "react-icons/md";
+import { RiBankLine } from "react-icons/ri";
 import { Tooltip } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 import { shade } from "./../../static/templates/colors";
-const ProfileDetails = ({ startEditting }) => {
-  const [editting, setEditting] = useState(false);
 
+const ProfileDetails = ({ startEditing }) => {
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {
     if (!authToken) {
@@ -38,6 +39,8 @@ const ProfileDetails = ({ startEditting }) => {
     userData.pan_no.slice(0, userData.pan_no.length - 4).replace(/./g, "X") +
     userData.pan_no.slice(userData.pan_no.length - 4);
 
+  var isVerified = userData.is_verified;
+
   console.log(userData);
   return (
     <>
@@ -53,6 +56,25 @@ const ProfileDetails = ({ startEditting }) => {
           alt="Helen Cross"
           className="object-cover h-full w-full"
         ></img>
+        {isVerified ? (
+          <Text
+            fontSize="xl"
+            fontWeight="bold"
+            className="font-roboto text-center bg-transparent relative -top-8 h-0 flex gap-2 items-center justify-center"
+            color={shade[600]}
+          >
+            <Icon as={GoVerified} />
+            Verified
+          </Text>
+        ) : (
+          <Text
+            fontSize="lg"
+            className="font-roboto text-center bg-transparent relative -top-8 h-0"
+            color={shade[900]}
+          >
+            Verification: Pending
+          </Text>
+        )}
       </div>
       <div className="bg-shade-1 h-full w-2/3 rounded-r-xl px-4 py-2 flex flex-col gap-4">
         <Text
@@ -151,7 +173,7 @@ const ProfileDetails = ({ startEditting }) => {
           colorScheme={shade[900]}
           variant="outline"
           className="w-fit ml-auto"
-          onClick={startEditting}
+          onClick={startEditing}
         >
           Edit
         </Button>

@@ -1,13 +1,28 @@
+import EditBankDetails from "./EditBankDetails";
 import EditProfileDetails from "./EditProfileDetails";
 import { useState } from "react";
 
-const EditProfile = ({ stage, setStage, profile, setProfile }) => {
+const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
 	const renderStage = (_stage) => {
 		switch (_stage) {
 			case 0:
-				return <EditProfileDetails profile={profile} setProfile={setProfile} />;
-			// case 1:
-			// 	return <EditBankDetails />;
+				return (
+					<EditProfileDetails
+						setStage={setStage}
+						profile={profile}
+						setProfile={setProfile}
+						stopEditing={stopEditing}
+					/>
+				);
+			case 1:
+				return (
+					<EditBankDetails
+						setStage={setStage}
+						profile={profile}
+						setProfile={setProfile}
+						stopEditing={stopEditing}
+					/>
+				);
 			// case 2:
 			// 	return <EditAadharDetails />;
 			// case 3:
