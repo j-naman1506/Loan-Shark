@@ -37,54 +37,67 @@ def response_format(data, status, message):
     return result
 
 # TODO: verify oauth login
-@csrf_exempt
-@api_view(http_method_names=['POST'])
+# @csrf_exempt
+@api_view(['POST',])
 @permission_classes([permissions.AllowAny,])
-@psa
-def oauth_login(request):
+@psa()
+def oauth_login(request, backend):
     """
     Login Function
     :param request:
     :return:
     """
     data = {}
-    serializer = SocialSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        # set up non-field errors key
-        # http://www.django-rest-framework.org/api-guide/exceptions/#exception-handling-in-rest-framework-views
-        try:
-            nfe = settings.NON_FIELD_ERRORS_KEY
-        except AttributeError:
-            nfe = 'non_field_errors'
+    status_ = status.HTTP_500_INTERNAL_SERVER_ERROR
+    data_status_ = "failure"
+    message = ''
+    try:
+        # print(request.data)
+        serializer = SocialSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            # set up non-field errors key
+            # http://www.django-rest-framework.org/api-guide/exceptions/#exception-handling-in-rest-framework-views
+            try:
+                nfe = settings.NON_FIELD_ERRORS_KEY
+            except AttributeError:
+                nfe = 'non_field_errors'
 
-        try:
-            user = request.backend.do_auth(serializer.validated_data['access_token'])
-        except HTTPError as e:
-            return Response(
-                data=data,
-                message="Invalid access code",
-                data_status="failure",
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            try:
+                user = request.backend.do_auth(serializer.validated_data['accessToken'])
+            except HTTPError as e:
+                return Response(
+                    data=data,
+                    message="Invalid access code",
+                    data_status="failure",
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
-        if user:
-            if user.is_active:
-                token, _ = Token.objects.get_or_create(user=user)
-                profile, created = Profile.objects.get_or_create(user=user)
-                profile_data = ProfileSerializer(profile).data
-                data_status_ = "success"
-                status_ = status.HTTP_200_OK
-                data = {
-                    'token': token.key,
-                    'profile': profile_data
-                    }
+            if user:
+                if user.is_active:
+                    token, _ = Token.objects.get_or_create(user=user)
+                    profile, created = Profile.objects.get_or_create(user=user)
+                    profile_data = ProfileSerializer(profile).data
+                    data_status_ = "success"
+                    message = "Successfully logged in"
+                    status_ = status.HTTP_200_OK
+                    data = {
+                        'token': token.key,
+                        'profile': profile_data
+                        }
+                else:
+                    message="User not active"
+                    status_=status.HTTP_400_BAD_REQUEST,
             else:
-                message="User not active"
-                status_=status.HTTP_400_BAD_REQUEST,
-        else:
-            message = "Some error with data"
-            status_ = status.HTTP_500_INTERNAL_SERVER_ERROR
-
+                message = "Some error with data"
+                status_ = status.HTTP_500_INTERNAL_SERVER_ERROR
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(str(e))
+        status_ = status.HTTP_500_INTERNAL_SERVER_ERROR
+        data_status_ = "failed"
+        message = "Server error 500 !"
     return Response(data=data, status=status_, data_status=data_status_, message=message)
 
 
@@ -109,7 +122,7 @@ def login(request):
     message = ""
     _data_status = "failure"
     if email is None or password is None:
-        message = 'Please provide both email and password''Please provide both email and password'
+        message = 'Please provide both email and password'
     else:
         user = authenticate(username=email, password=password)
         if not user:
@@ -229,8 +242,8 @@ class ResetUserPwdAPIView(APIView):
         status_ = "success"
         message = ''
         try:
-            username = request.POST.get('username', '')
-            new_password = request.POST.get('new_password', '')
+            username = request.data.get('username', '')
+            new_password = request.data.get('new_password', '')
             try:
                 user = User.objects.get(username=username)
                 user.set_password(new_password)
@@ -295,7 +308,7 @@ class ProfileAPIView(APIView):
         try:
             user = request.user
             userprofile = Profile.objects.get_or_create(user=user)
-            serializer = ProfileSerializer(userprofile, data=request.POST)
+            serializer = ProfileSerializer(userprofile, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 data = serializer.data()
@@ -334,14 +347,14 @@ class AddUserAPIView(APIView):
 
     def post(self, request):
         data = ''
-        data_status_ = "success"
+        data_status_ = "failure"
         status_ = status.HTTP_500_INTERNAL_SERVER_ERROR
         message = ''
         user = ''
         try:
-            # username = request.POST.get('username', '')
-            email = request.POST.get('email', '')
-            password = request.POST.get('password', '')
+            # username = request.data.get('username', '')
+            email = request.data.get('email', '')
+            password = request.data.get('password', '')
             if email and password:
                 try:
                     user = User.objects.create_user(username=email,
@@ -359,19 +372,25 @@ class AddUserAPIView(APIView):
                     message = "something went wrong!"
                     print(e)
             if user:
-                user.first_name = request.POST.get('first_name', '')
-                user.last_name = request.POST.get('last_name', '')
+                user.first_name = request.data.get('first_name', '')
+                user.last_name = request.data.get('last_name', '')
                 user.save()
                 profile, created = Profile.objects.get_or_create(user=user)
-                profile.age = request.POST.get('age', '')
-                serializer = ProfileSerializer(profile)
+                age = request.data.get('age', '')
+                serializer = ProfileSerializer(profile, data={'age':age})
                 if serializer.is_valid():
+                    serializer.save()
+                    token, _ = Token.objects.get_or_create(user=user)
                     data = {
+                        "token": token.key,
                         "profile": serializer.data
                     }
+                    data_status_ = "success"
                     message = "User details saved successfully"
                     status_ = status.HTTP_201_CREATED
                 else:
+                    print(serializer.error_messages)
+                    user.delete()
                     message = "Invalid data"
                     status_ = status.HTTP_400_BAD_REQUEST
                     data_status_ = "failure"
@@ -380,6 +399,8 @@ class AddUserAPIView(APIView):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
             print(str(e))
+            if user:
+                user.delete()
             data_status_ = "failed"
             if not message:
                 message = "Server error 404 !"

@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-3!k5jn8naz_by6aq2&k2l@rjsx_9^h7_6-z*w&=_q!vl_^zko_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -168,6 +167,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+
+# config per http://psa.matiasaguirre.net/docs/configuration/django.html#django-admin
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
+
+# If this is not set, PSA constructs a plausible username from the first portion of the
+# user email, plus some random disambiguation characters if necessary.
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

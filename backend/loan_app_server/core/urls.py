@@ -26,5 +26,5 @@ urlpatterns = [
 	path('add-user/', AddUserAPIView.as_view(), name='add-user'),
     path('delete-user/', DeleteUserAPIView.as_view(), name='delete-user'),
     # 'auth/social/google-oauth2/'
-    path('', include('social_django.urls', namespace='social')),
+    re_path(r'social/(?P<backend>[^/]+)/$', oauth_login, name="oauth-login"),
 ]

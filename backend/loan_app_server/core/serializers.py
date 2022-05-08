@@ -51,21 +51,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     """ User Profile Serializer """
-    # user = UserSerializer(read_only=True)
-    first_name = serializers.CharField(source="user")
-    last_name = serializers.CharField(source="user")
-    email = serializers.CharField(source="user")
+    user = UserSerializer(read_only=True)
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+
+    def get_first_name(self, instance):
+        return instance.user.first_name
+
+    def get_last_name(self, instance):
+        return instance.user.last_name
+    
+    def get_email(self, instance):
+        return instance.user.email
 
     class Meta:
         model = Profile
-        fields = ['id', 'first_name', 'last_name', 'email', 'age', 'profile_pic', 'location', 'gender', 'cibil_score', 'verified', 'eligible_amount', ]
+        fields = '__all__'
 
 
 class SocialSerializer(serializers.Serializer):
     """
     Serializer which accepts an OAuth2 access token.
     """
-    access_token = serializers.CharField(
+    accessToken = serializers.CharField(
         allow_blank=False,
         trim_whitespace=True,
     )

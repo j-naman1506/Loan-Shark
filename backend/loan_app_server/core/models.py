@@ -79,7 +79,7 @@ class Profile(BaseContent):
 	user = models.OneToOneField(User, related_name = "profile", on_delete=models.CASCADE)
 	profile_pic = models.ImageField(upload_to="profile/", null=True)
 	dob = models.DateField(null=True, blank=True)
-	age = models.IntegerField(default=0, null=True, blank=True)
+	age = models.CharField(max_length=3, null=True, blank=True)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
 	is_active = models.BooleanField(default=True)
 	location = models.CharField(max_length=200, null=True, blank=True)
