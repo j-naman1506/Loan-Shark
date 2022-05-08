@@ -21,9 +21,7 @@ const EditAadharDetails = ({
 	profile,
 	setProfile,
 }) => {
-	const [aadharUrl, setAadharUrl] = useState(null);
-	const [panUrl, setPanUrl] = useState(null);
-	const [peronsalDetails, setDetails] = useState();
+	const [personalDetails, setDetails] = useState({});
 
 	useEffect(() => {
 		setDetails(profile);
@@ -54,27 +52,28 @@ const EditAadharDetails = ({
 		}));
 	}
 	function handleContinue() {
-		console.log(peronsalDetails);
+		console.log(personalDetails);
 		setProfile((prevState) => ({
 			...profile,
-			...peronsalDetails,
+			...personalDetails,
 		}));
 		setStage(stage + 1);
 		console.log(profile);
 	}
 	function handleBack() {
-		console.log(peronsalDetails);
+		console.log(personalDetails);
 		setProfile((prevState) => ({
 			...profile,
-			...peronsalDetails,
+			...personalDetails,
 		}));
 		setStage(stage - 1);
 		console.log(profile);
 	}
 
+	if (!personalDetails) return null;
+
 	return (
 		<>
-			peronsalDetails && (
 			<div className="bg-shade-200 h-full w-full rounded-r-xl py-6 px-12 flex flex-col gap-4">
 				<Heading as="h2" size="xl" textAlign="center">
 					Aadhar & PAN Details
@@ -91,8 +90,8 @@ const EditAadharDetails = ({
 								_hover={{ borderColor: shade[900] }}
 								_active={{ borderColor: shade[900] }}
 								value={
-									peronsalDetails.aadhar_number
-										? peronsalDetails.aadhar_number
+									personalDetails.aadhar_number
+										? personalDetails.aadhar_number
 										: ""
 								}
 								onChange={handleChange}
@@ -110,7 +109,7 @@ const EditAadharDetails = ({
 								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
 								value={
-									peronsalDetails.pan_number ? peronsalDetails.pan_number : ""
+									personalDetails.pan_number ? personalDetails.pan_number : ""
 								}
 								onChange={handleChange}
 							/>
@@ -126,7 +125,7 @@ const EditAadharDetails = ({
 								id="aadhar_card"
 								type="file"
 								accept="application/pdf"
-								name="aadhar_card"
+								name="aadhar_card_link"
 								fontSize="lg"
 								padding="1"
 								borderColor={shade[800]}
@@ -145,7 +144,7 @@ const EditAadharDetails = ({
 								id="pan_card"
 								type="file"
 								accept="application/pdf"
-								name="pan_card"
+								name="pan_card_link"
 								fontSize="lg"
 								padding="1"
 								borderColor={shade[800]}
@@ -158,18 +157,18 @@ const EditAadharDetails = ({
 					</div>
 
 					<div className="flex h-full gap-4">
-						{aadharUrl ? (
+						{personalDetails.aadhar_card_link ? (
 							<div className="h-96 m-0 p-0 w-full overflow-y-scroll">
-								<Viewer fileUrl={aadharUrl} />
+								<Viewer fileUrl={personalDetails.aadhar_card_link} />
 							</div>
 						) : (
 							<div className="flex justify-center items-center h-full w-full border-2 border-shade-900 border-dashed border-opacity-30 text-3xl">
 								Your uploaded Aadhar Card will show here
 							</div>
 						)}
-						{panUrl ? (
+						{personalDetails.pan_card_link ? (
 							<div className="h-96 m-0 p-0 w-full overflow-y-scroll">
-								<Viewer fileUrl={panUrl} />
+								<Viewer fileUrl={personalDetails.pan_card_link} />
 							</div>
 						) : (
 							<div className="flex justify-center items-center h-full w-full border-2 border-shade-900 border-dashed border-opacity-30 text-3xl">
@@ -257,7 +256,6 @@ const EditAadharDetails = ({
 					</ButtonGroup>
 				</form>
 			</div>
-			)
 		</>
 	);
 };
