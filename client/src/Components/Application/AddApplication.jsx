@@ -14,10 +14,25 @@ import {
   NumberInputStepper,
   Select,
 } from "@chakra-ui/react";
-
+import { useState } from "react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
 const AddApplication = () => {
+  const [application, setApplication] = useState({
+    amount: "",
+    tenure: "",
+    interestRate: "",
+  });
+
+  function handleChange(e) {
+    setApplication((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  }
+  function HandleSubmit() {
+    console.log(application);
+  }
   return (
     <div className="bg-shade-200 h-full w-full rounded-r-xl rounded-bl-xl p-6 flex flex-col gap-4 shadow-lg text-shade-800">
       <Heading as="h2" size="xl" textAlign="center">
@@ -35,6 +50,8 @@ const AddApplication = () => {
               _hover={{ borderColor: shade[900] }}
               _active={{ borderColor: shade[900] }}
               borderWidth={1}
+              value={application.amount}
+              onChange={handleChange}
             />
           </FormControl>
         </div>
@@ -51,6 +68,8 @@ const AddApplication = () => {
               _hover={{ borderColor: shade[900] }}
               _active={{ borderColor: shade[900] }}
               borderWidth={1}
+              value={application.tenure}
+              onChange={handleChange}
             />
           </FormControl>
         </div>
@@ -67,6 +86,8 @@ const AddApplication = () => {
               _hover={{ borderColor: shade[900] }}
               _active={{ borderColor: shade[900] }}
               borderWidth={1}
+              value={application.interestRate}
+              onChange={handleChange}
             />
           </FormControl>
         </div>
@@ -83,6 +104,7 @@ const AddApplication = () => {
               borderWidth: 1,
             }}
             size="md"
+            onClick={HandleSubmit}
           >
             Submit
           </Button>
@@ -98,6 +120,13 @@ const AddApplication = () => {
               borderWidth: 1,
             }}
             size="md"
+            onClick={() =>
+              setApplication({
+                amount: "",
+                tenure: "",
+                interestRate: "",
+              })
+            }
           >
             Clear
           </Button>
