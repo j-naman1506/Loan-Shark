@@ -3,16 +3,9 @@ import {
 	Button,
 	ButtonGroup,
 	FormControl,
-	FormHelperText,
 	FormLabel,
 	Heading,
 	Input,
-	NumberDecrementStepper,
-	NumberIncrementStepper,
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
-	Select,
 } from "@chakra-ui/react";
 
 import { shade } from "./../../static/templates/colors";
