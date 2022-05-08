@@ -4,6 +4,7 @@ import {
 	FormControl,
 	FormHelperText,
 	FormLabel,
+	Heading,
 	Input,
 	NumberDecrementStepper,
 	NumberIncrementStepper,
@@ -16,7 +17,7 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
 
-const EditProfileDetails = ({ profile, setProfile }) => {
+const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
 	return (
 		<>
 			<div className="bg-shade-400 h-full w-1/3">
@@ -26,21 +27,11 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 					className="object-cover h-full w-full"
 				></img>
 			</div>
-			<div className="bg-shade-200 h-full w-2/3 rounded-r-xl px-4 py-2 flex flex-col gap-4">
+			<div className="bg-shade-200 h-full w-2/3 rounded-r-xl p-6 flex flex-col gap-4">
+				<Heading as="h2" size="xl" textAlign="center">
+					Personal Info
+				</Heading>
 				<form className="flex flex-col h-full justify-evenly gap-8 ">
-					<FormControl>
-						<FormLabel htmlFor="username">Username</FormLabel>
-						<Input
-							id="username"
-							type="text"
-							name="username"
-							borderColor={shade[800]}
-							_hover={{ borderColor: shade[900] }}
-							_active={{ borderColor: shade[900] }}
-							borderWidth={1}
-						/>
-					</FormControl>
-
 					<div className="flex gap-4">
 						<FormControl>
 							<FormLabel htmlFor="first_name">First Name</FormLabel>
@@ -135,6 +126,7 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 								borderWidth: 1,
 							}}
 							size="md"
+							onClick={() => setStage(1)}
 						>
 							Continue
 						</Button>
@@ -152,6 +144,23 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 							size="md"
 						>
 							Clear
+						</Button>
+
+						<Button
+							bgColor={shade[200]}
+							textColor={shade[800]}
+							borderWidth={1}
+							borderColor={shade[800]}
+							_hover={{
+								bgColor: shade[500],
+								textColor: shade[900],
+								borderColor: shade[900],
+								borderWidth: 1,
+							}}
+							size="md"
+							onClick={stopEditing}
+						>
+							Cancel
 						</Button>
 					</ButtonGroup>
 				</form>
