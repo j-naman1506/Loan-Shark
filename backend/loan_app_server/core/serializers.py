@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Document
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -51,10 +51,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     """ User Profile Serializer """
-    user = UserSerializer(read_only=True)
+    # user = UserSerializer(read_only=True)
     first_name = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
+    # doc_num = serializers.SerializerMethodField()
 
     def get_first_name(self, instance):
         return instance.user.first_name
@@ -65,9 +66,21 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_email(self, instance):
         return instance.user.email
 
+    # def get_doc_num(self, instance):
+    #     data = {}
+    #     try:
+    #         document = Document.objects.get(user=instance.user)
+    #         data = {
+    #             'pan_num' : document.pan_card_num,
+    #             'gov_id_num' : document.gov_id_num
+    #         }
+    #     except Document.DoesNotExist:
+    #         pass
+    #     return data
+
     class Meta:
         model = Profile
-        fields = '__all__'
+        exclude = ['user',]
 
 
 class SocialSerializer(serializers.Serializer):

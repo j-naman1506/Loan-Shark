@@ -32,7 +32,7 @@ class BaseContent(models.Model):
 		abstract = True
 
 	def __str__(self):
-		return self.id
+		return str(self.id)
 
 
 class BankAccount(BaseContent):
@@ -52,6 +52,8 @@ class Document(BaseContent):
 	def user_directory_path(instance, filename):
 		return 'user_{0}/{1}'.format(instance.user.id, uuid.uuid4())
 
+	gov_id_num = models.CharField(max_length=20, null=True, blank=True)
+	pan_card_num = models.CharField(max_length=15, null=True, blank=True)
 	user = models.OneToOneField(User, related_name="documents", on_delete=models.CASCADE)
 	pan_card = models.FileField(upload_to=user_directory_path)
 	gov_id = models.FileField(upload_to=user_directory_path)
