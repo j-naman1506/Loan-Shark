@@ -13,17 +13,20 @@ import {
 	Select,
 } from "@chakra-ui/react";
 
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { shade } from "./../../static/templates/colors";
+
 const EditProfileDetails = ({ profile, setProfile }) => {
 	return (
 		<>
-			<div className="bg-shade-2 h-full w-1/3">
+			<div className="bg-shade-400 h-full w-1/3">
 				<img
 					src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
 					alt="Helen Cross"
 					className="object-cover h-full w-full"
 				></img>
 			</div>
-			<div className="bg-shade-1 h-full w-2/3 rounded-r-xl px-4 py-2 flex flex-col gap-4">
+			<div className="bg-shade-200 h-full w-2/3 rounded-r-xl px-4 py-2 flex flex-col gap-4">
 				<form className="flex flex-col h-full justify-evenly gap-8 ">
 					<FormControl>
 						<FormLabel htmlFor="username">Username</FormLabel>
@@ -31,7 +34,9 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 							id="username"
 							type="text"
 							name="username"
-							borderColor="#FB6376"
+							borderColor={shade[800]}
+							_hover={{ borderColor: shade[900] }}
+							_active={{ borderColor: shade[900] }}
 							borderWidth={1}
 						/>
 					</FormControl>
@@ -43,7 +48,9 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 								id="first_name"
 								type="text"
 								name="first_name"
-								borderColor="#FB6376"
+								borderColor={shade[800]}
+								_hover={{ borderColor: shade[900] }}
+								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
 							/>
 						</FormControl>
@@ -54,7 +61,9 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 								id="last_name"
 								type="text"
 								name="last_name"
-								borderColor="#FB6376"
+								borderColor={shade[800]}
+								_hover={{ borderColor: shade[900] }}
+								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
 							/>
 						</FormControl>
@@ -66,10 +75,14 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 							id="email"
 							type="email"
 							name="email"
-							borderColor="#FB6376"
+							borderColor={shade[800]}
+							_hover={{ borderColor: shade[900] }}
+							_active={{ borderColor: shade[900] }}
 							borderWidth={1}
 						/>
-						<FormHelperText>We'll never share your email.</FormHelperText>
+						<FormHelperText color={shade[700]}>
+							We'll never share your email.
+						</FormHelperText>
 					</FormControl>
 
 					<div className="flex gap-4">
@@ -80,7 +93,9 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 								min={0}
 								max={100}
 								name="age"
-								borderColor="#FB6376"
+								borderColor={shade[800]}
+								_hover={{ borderColor: shade[900] }}
+								_active={{ borderColor: shade[900] }}
 							>
 								<NumberInputField />
 								<NumberInputStepper>
@@ -94,7 +109,9 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 							<FormLabel htmlFor="gender">Gender</FormLabel>
 							<Select
 								placeholder="Select your gender"
-								borderColor="#FB6376"
+								borderColor={shade[800]}
+								_hover={{ borderColor: shade[900] }}
+								_active={{ borderColor: shade[900] }}
 								borderWidth={1}
 							>
 								<option value="option1">Male</option>
@@ -106,25 +123,33 @@ const EditProfileDetails = ({ profile, setProfile }) => {
 
 					<ButtonGroup spacing="6">
 						<Button
-							bgColor="#FB6376"
-							textColor="#FFF9EC"
+							rightIcon={<ArrowForwardIcon />}
+							bgColor={shade[800]}
+							textColor={shade[200]}
+							borderWidth={1}
+							borderColor={shade[100]}
 							_hover={{
-								bgColor: "#FFF9EC",
-								textColor: "#FB6376",
-								borderColor: "#FB6376",
+								bgColor: shade[500],
+								textColor: shade[900],
+								borderColor: shade[900],
+								borderWidth: 1,
 							}}
 							size="md"
 						>
-							Update
+							Continue
 						</Button>
 						<Button
-							borderColor="#FB6376"
-							textColor="#FB6376"
-							// _hover={{
-							// 	bgColor: "#FFF9EC",
-							// }}
+							bgColor={shade[200]}
+							textColor={shade[800]}
+							borderWidth={1}
+							borderColor={shade[800]}
+							_hover={{
+								bgColor: shade[500],
+								textColor: shade[900],
+								borderColor: shade[900],
+								borderWidth: 1,
+							}}
 							size="md"
-							variant={"outline"}
 						>
 							Clear
 						</Button>

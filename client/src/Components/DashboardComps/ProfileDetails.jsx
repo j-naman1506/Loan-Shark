@@ -1,5 +1,6 @@
+import { FiEdit3 } from "react-icons/fi";
 import { HiOutlineIdentification, HiOutlineMail } from "react-icons/hi";
-import { Icon, Text } from "@chakra-ui/react";
+import { Button, Icon, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaFemale } from "react-icons/fa";
 import { RiBankLine } from "react-icons/ri";
@@ -7,6 +8,7 @@ import { useState, useEffect } from "react";
 import { MdOutlineDownloading } from "react-icons/md";
 import { Tooltip } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
+import { shade } from "./../../static/templates/colors";
 const ProfileDetails = ({ startEditting }) => {
   const [editting, setEditting] = useState(false);
 
@@ -53,15 +55,27 @@ const ProfileDetails = ({ startEditting }) => {
         ></img>
       </div>
       <div className="bg-shade-1 h-full w-2/3 rounded-r-xl px-4 py-2 flex flex-col gap-4">
-        <Text fontSize="5xl" className="font-roboto text-center capitalize">
+        <Text
+          fontSize="5xl"
+          className="font-roboto text-center capitalize"
+          color={shade[900]}
+        >
           {`${userData.first_name} ${userData.last_name}`.toLowerCase()}
         </Text>
 
-        <Text fontSize="2xl" className="font-roboto text-shade-4">
+        <Text
+          fontSize="2xl"
+          className="font-roboto text-shade-4"
+          color={shade[800]}
+        >
           <Icon as={HiOutlineMail} /> {userData.email}
         </Text>
 
-        <Text fontSize="2xl" className="font-roboto text-shade-4">
+        <Text
+          fontSize="2xl"
+          className="font-roboto text-shade-4"
+          color={shade[800]}
+        >
           <Icon as={FaFemale} />{" "}
           {userData.age ? `${userData.age} $ Years Old` : "Not Provided"}
         </Text>
@@ -69,6 +83,7 @@ const ProfileDetails = ({ startEditting }) => {
         <Text
           fontSize="2xl"
           className="font-roboto text-shade-4 flex items-center gap-4"
+          color={shade[800]}
         >
           <Icon as={RiBankLine} />
           {account_no ? (
@@ -83,11 +98,12 @@ const ProfileDetails = ({ startEditting }) => {
         <Text
           fontSize="2xl"
           className="font-roboto text-shade-4 flex items-center gap-4"
+          color={shade[800]}
         >
           <Icon as={HiOutlineIdentification} />{" "}
           {aadhar_no ? (
             <span className="flex gap-4 items-center">
-              <Text>{aadhar_no}</Text>
+              <Text color={shade[800]}>{aadhar_no}</Text>
               <Icon
                 as={MdOutlineDownloading}
                 onClick={(e) => {
@@ -107,6 +123,7 @@ const ProfileDetails = ({ startEditting }) => {
           <Text
             fontSize="2xl"
             className="font-roboto text-shade-4 flex items-center gap-4"
+            color={shade[800]}
           >
             <Icon as={HiOutlineIdentification} />{" "}
             {pan_no ? (
@@ -127,6 +144,16 @@ const ProfileDetails = ({ startEditting }) => {
             )}
           </Text>
         </Tooltip>
+
+        <Button
+          leftIcon={<FiEdit3 />}
+          colorScheme={shade[900]}
+          variant="outline"
+          className="w-fit ml-auto"
+          onClick={startEditting}
+        >
+          Edit
+        </Button>
       </div>
       {/* </div> */}
     </>
