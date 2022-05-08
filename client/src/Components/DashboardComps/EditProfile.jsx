@@ -1,6 +1,6 @@
 import EditAadharDetails from "./EditAadharDetails";
 import EditBankDetails from "./EditBankDetails";
-// import EditPaySlips from "./EditPaySlips";
+import EditPaySlips from "./EditPaySlips";
 import EditProfileDetails from "./EditProfileDetails";
 import { useState } from "react";
 

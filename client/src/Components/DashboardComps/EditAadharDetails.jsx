@@ -29,9 +29,11 @@ const EditAadharDetails = ({
     }));
   }
   function handleFileChange(e) {
+    let fileurl = URL.createObjectURL(e.target.files[0]);
     setDetails((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.files[0],
+      [e.target.id]: e.target.files[0],
+      [e.target.name]: fileurl,
     }));
   }
   function handleContinue() {
@@ -87,18 +89,13 @@ const EditAadharDetails = ({
                 id="aadhar_card"
                 type="file"
                 accept="application/pdf"
-                name="aadhar_card"
+                name="aadhar_link"
                 fontSize="lg"
                 padding="1"
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
                 _active={{ borderColor: shade[900] }}
                 borderWidth={1}
-                src={
-                  peronsalDetails.aadhar_card
-                    ? peronsalDetails.aadhar_card
-                    : null
-                }
                 onChange={handleFileChange}
               />
             </FormControl>
@@ -128,14 +125,13 @@ const EditAadharDetails = ({
                 id="pan_card"
                 type="file"
                 accept="application/pdf"
-                name="pan_card"
+                name="pan_link"
                 fontSize="lg"
                 padding="1"
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
                 _active={{ borderColor: shade[900] }}
                 borderWidth={1}
-                src={peronsalDetails.pan_card ? peronsalDetails.pan_card : null}
                 onChange={handleFileChange}
               />
             </FormControl>
