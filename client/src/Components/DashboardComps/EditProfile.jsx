@@ -4,7 +4,14 @@ import EditPaySlips from "./EditPaySlips";
 import EditProfileDetails from "./EditProfileDetails";
 import { useState } from "react";
 
-const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
+const EditProfile = ({
+  stage,
+  setStage,
+  profile,
+  setProfile,
+  stopEditing,
+  onSubmit,
+}) => {
   const renderStage = (_stage) => {
     switch (_stage) {
       case 0:
@@ -45,6 +52,7 @@ const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
             profile={profile}
             setProfile={setProfile}
             stopEditing={stopEditing}
+            onSubmit={onSubmit}
           />
         );
     }

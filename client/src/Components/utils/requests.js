@@ -5,4 +5,6 @@ export const requests = {
   doRegister: "/auth/add-user/",
   doLogin: "/auth/login/",
   doOAuthLogin: "/auth/social/google-oauth2/",
+  getDocuments: "/api/document",
+  getBankDetails: "/api/document",
 };
