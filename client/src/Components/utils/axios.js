@@ -9,7 +9,7 @@ var instance = axios.create({
 
 const authToken = Session.get("token");
 instance.defaults.headers.common["Authorization"] = authToken
-  ? `Bearer ${authToken}`
+  ? `Token ${authToken}`
   : "";
 
 export default instance;

@@ -26,6 +26,7 @@ const EditBankDetails = ({
 }) => {
   const [peronsalDetails, setDetails] = useState();
   useEffect(() => {
+    console.log(profile);
     setDetails(profile);
   }, []);
 

@@ -2,11 +2,16 @@ import { Button, Icon, Text } from "@chakra-ui/react";
 import { HiOutlineIdentification, HiOutlineMail } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { requests } from "../utils/requests";
+import axios from "../utils/axios";
 
 import { FaFemale } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import { GoVerified } from "react-icons/go";
-import { MdOutlineDownloading } from "react-icons/md";
+import {
+  MdOutlineDownloading,
+  MdOutlineLocationSearching,
+} from "react-icons/md";
 import { RiBankLine } from "react-icons/ri";
 import { Tooltip } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
@@ -16,23 +21,34 @@ const ProfileDetails = ({ startEditing }) => {
   const authToken = useSelector((state) => state.auth.token);
   const [document, setDocument] = useState();
   const [bankdetail, setBankDetail] = useState();
+
+  const [aadhar_number, setAadharNumber] = useState("");
+  const [account_number, setAccount_number] = useState("");
+  const [aadhar_link, setAadharLink] = useState("");
+  const [pan_link, setPanLink] = useState("");
+  const [pan_number, setPan_number] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+
   useEffect(() => {
     if (!authToken) {
       window.location.href = "/login";
     }
-    // async function fetchDocuments() {
-    //   const request = await axios.get(requests["getDocuments"]);
-    //   return request;
-    // }
+    async function fetchDocuments() {
+      try {
+        const request = await axios.get(requests["getDocuments"]);
+        const data = request.data.data;
+        console.log(data);
+        setDocument(data);
+        parseData(data);
+      } catch (e) {
+        console.log(e);
+        alert("Something Went Wrong");
+      }
+    }
 
-    // fetchDocuments()
-    //   .then((res) => {
-    //     const data = res.data.data;
-    //     setDocument(data);
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //   });
+    fetchDocuments();
+    //   .then((res) => {})
+    //   .catch((e) => {});
 
     // async function fetchBankDetails() {
     //   const request = await axios.get(requests["getBankDetails"]);
@@ -50,30 +66,41 @@ const ProfileDetails = ({ startEditing }) => {
   }, []);
 
   var userData = useSelector((state) => state.auth.userinfo);
-  var aadhar_number = "",
-    account_number = "",
-    pan_number = "";
-  //   var aadhar_number =
-  //     document.gov_id_num
-  //       .slice(0, document.gov_id_num.length - 4)
-  //       .replace(/./g, "X") +
-  //     document.gov_id_num.slice(document.gov_id_num.length - 4);
+  const parseData = (document) => {
+    if (!document) return;
+    console.log(document);
+    setAadharLink(document.gov_id);
+    setPanLink(document.pan_card);
+    setAadharNumber(
+      document.gov_id_num
+        .slice(0, document.gov_id_num.length - 4)
+        .replace(/./g, "X") +
+        document.gov_id_num.slice(document.gov_id_num.length - 4)
+    );
 
-  //   var account_number =
-  //     bankdetail.account_number
-  //       .slice(0, bankdetail.account_number.length - 4)
-  //       .replace(/./g, "X") +
-  //     bankdetail.account_number.slice(bankdetail.account_number.length - 4);
+    // account_number =
+    //   bankdetail.account_number
+    //     .slice(0, bankdetail.account_number.length - 4)
+    //     .replace(/./g, "X") +
+    //   bankdetail.account_number.slice(bankdetail.account_number.length - 4);
+    // console.log(
+    //   document.pan_card_num
+    //     .slice(0, document.pan_card_num.length - 4)
+    //     .replace(/./g, "X")
+    // );
 
-  //   var pan_number =
-  //     document.pan_card_num
-  //       .slice(0, document.pan_card_num.length - 4)
-  //       .replace(/./g, "X") +
-  //     document.pan_number.slice(document.pan_card_num.length - 4);
+    setPan_number(
+      document.pan_card_num
+        .slice(0, document.pan_card_num.length - 4)
+        .replace(/./g, "X") +
+        document.pan_card_num.slice(document.pan_card_num.length - 4)
+    );
 
-  var isVerified = userData.is_verified;
+    setIsVerified(userData.is_verified);
 
-  console.log(userData);
+    console.log(userData);
+  };
+
   return (
     <>
       <div className="bg-shade-200 h-full w-1/3">
@@ -156,7 +183,7 @@ const ProfileDetails = ({ startEditing }) => {
                   as={MdOutlineDownloading}
                   onClick={(e) => {
                     saveAs(
-                      "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                      window.env.REACT_APP_SERVER_URL + aadhar_link,
                       "aadhar.pdf"
                     );
                   }}
@@ -182,8 +209,8 @@ const ProfileDetails = ({ startEditing }) => {
                   as={MdOutlineDownloading}
                   onClick={(e) => {
                     saveAs(
-                      "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                      "aadhar.pdf"
+                      window.env.REACT_APP_SERVER_URL + pan_link,
+                      "pan.pdf"
                     );
                   }}
                 />

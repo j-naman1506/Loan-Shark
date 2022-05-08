@@ -24,6 +24,7 @@ const EditAadharDetails = ({
   const [personalDetails, setDetails] = useState({});
 
   useEffect(() => {
+    console.log(profile);
     setDetails(profile);
   }, []);
 
@@ -159,7 +160,11 @@ const EditAadharDetails = ({
           <div className="flex h-full gap-4">
             {personalDetails.gov_id ? (
               <div className="h-56 m-0 p-0 w-full overflow-y-scroll">
-                <Viewer fileUrl={personalDetails.gov_id} />
+                <Viewer
+                  fileUrl={
+                    window.env.REACT_APP_SERVER_URL + personalDetails.gov_id
+                  }
+                />
               </div>
             ) : (
               <div className="flex justify-center items-center h-full w-full border-2 border-shade-900 border-dashed border-opacity-30 text-3xl">
@@ -168,7 +173,11 @@ const EditAadharDetails = ({
             )}
             {personalDetails.pan_card ? (
               <div className="h-56 m-0 p-0 w-full overflow-y-scroll">
-                <Viewer fileUrl={personalDetails.pan_card} />
+                <Viewer
+                  fileUrl={
+                    window.env.REACT_APP_SERVER_URL + personalDetails.pan_card
+                  }
+                />
               </div>
             ) : (
               <div className="flex justify-center items-center h-full w-full border-2 border-shade-900 border-dashed border-opacity-30 text-3xl">

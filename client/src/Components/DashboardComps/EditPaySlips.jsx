@@ -31,15 +31,22 @@ const EditPaySlips = ({
   onSubmit,
 }) => {
   const [personalDetails, setDetails] = useState({});
-
+  const [urls, setUrls] = useState([]);
+  const [currentUrlIndex, setCurrentUrlIndex] = useState(null);
   useEffect(() => {
+    console.log(profile);
     setDetails(profile);
+    if (profile.pay_slips) {
+      var temp = [];
+      for (var i = 0; i < profile.pay_slips.length; i++) {
+        temp.push(profile.pay_slips[i].file);
+      }
+      setUrls(temp);
+      setCurrentUrlIndex(0);
+      console.log(urls);
+    }
   }, []);
-
-  const [urls, setUrls] = useState(profile.pay_slips ? profile.pay_slips : []);
-  const [currentUrlIndex, setCurrentUrlIndex] = useState(
-    urls.length ? 0 : null
-  );
+  console.log(urls);
 
   const onChange = (e) => {
     const files = e.target.files;
@@ -60,11 +67,11 @@ const EditPaySlips = ({
     setUrls(fileUrls);
   };
   function handleSubmit() {
-    setProfile((prevState) => ({
-      ...profile,
-      ...personalDetails,
-    }));
-    onSubmit();
+    // setProfile((prevState) => ({
+    //   ...profile,
+    //   ...personalDetails,
+    // }));
+    onSubmit(personalDetails);
   }
 
   function handleBack() {
@@ -100,7 +107,11 @@ const EditPaySlips = ({
                     );
                   }}
                 />
-                <Viewer fileUrl={urls[currentUrlIndex]} />
+                <Viewer
+                  fileUrl={
+                    window.env.REACT_APP_SERVER_URL + urls[currentUrlIndex]
+                  }
+                />
                 <IconButton
                   aria-label="Move Right"
                   height="100%"

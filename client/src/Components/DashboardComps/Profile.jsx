@@ -4,6 +4,8 @@ import EditProfile from "./EditProfile";
 import ProfileDetails from "./ProfileDetails";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
+import { requests } from "../utils/requests";
+import axios from "../utils/axios";
 
 const Profile = () => {
   const [editing, setEditing] = useState(false);
@@ -11,40 +13,24 @@ const Profile = () => {
   const [profile, setProfile] = useState({});
   var userinfo = useSelector((state) => state.auth.userinfo);
   useEffect(() => {
-    setProfile(userinfo);
-    // async function fetchDocuments() {
-    //   const request = await axios.get(requests["getDocuments"]);
-    //   return request;
-    // }
+    async function fetchDocuments() {
+      const request = await axios.get(requests["getDocuments"]);
+      return request;
+    }
 
-    // fetchDocuments()
-    //   .then((res) => {
-    //     const data = res.data.data;
-    //     setProfile((prevState) => ({
-    //       ...profile,
-    //       ...data,
-    //     }));
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //   });
-
-    // async function fetchBankDetails() {
-    //   const request = await axios.get(requests["getBankDetails"]);
-    //   return request;
-    // }
-
-    // fetchBankDetails()
-    //   .then((res) => {
-    //     const data = res.data.data;
-    //     setProfile((prevState) => ({
-    //       ...profile,
-    //       ...data,
-    //     }));
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //   });
+    fetchDocuments()
+      .then((res) => {
+        const data = res.data.data;
+        console.log(data);
+        setProfile((prevState) => ({
+          ...userinfo,
+          ...data,
+        }));
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something Went Wrong");
+      });
   }, []);
 
   const startEditing = () => {
@@ -56,9 +42,101 @@ const Profile = () => {
     setProfile(userinfo);
     setStage(0);
   };
-  console.log(profile);
-  function onSubmit() {
+
+  function onSubmit(profile) {
     console.log(profile);
+    let documentformData = new FormData();
+    profile.gov_id_obj && documentformData.append("gov_id", profile.gov_id_obj);
+    profile.pan_card_obj &&
+      documentformData.append("pan_card", profile.pan_card_obj);
+    if (profile.pay_slips_obj) {
+      for (var i = 0; i < profile.pay_slips_obj.length; i++) {
+        documentformData.append("pay_slips", profile.pay_slips_obj[i]);
+      }
+    }
+
+    documentformData.append("gov_id_num", profile.gov_id_num);
+    documentformData.append("pan_card_num", profile.pan_card_num);
+    console.log(documentformData);
+    async function submitDocuments() {
+      const request = await axios({
+        method: "POST",
+        url: requests["getDocuments"],
+        data: documentformData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return request;
+    }
+
+    submitDocuments()
+      .then((res) => {
+        const data = res.data.data;
+        console.log(data);
+        alert("Done");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong");
+      });
+    const bankdata = {
+      account_number: profile.account_number,
+      ifsc_code: profile.ifsc_code,
+      holder_name: profile.holder_name,
+      branch_name: profile.branch_name,
+    };
+    async function editBankDetail() {
+      const request = await axios({
+        method: "POST",
+        url: requests["getBankDetails"],
+        data: bankdata,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return request;
+    }
+
+    editBankDetail()
+      .then((res) => {
+        const data = res.data.data;
+        console.log(data);
+        alert("Done");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong");
+      });
+    var profileData = new FormData();
+    profile_pic_obj && profileData.append("profile_pic", profile_pic_obj);
+    profileData.append("first_name", profile.first_name);
+    profileData.append("last_name", profile.last_name);
+    profileData.append("age", profile.age);
+    profileData.append("gender", profile.gender);
+
+    async function editProfile() {
+      const request = await axios({
+        method: "POST",
+        url: requests["editProfile"],
+        data: profileData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return request;
+    }
+
+    editProfile()
+      .then((res) => {
+        const data = res.data.data;
+        console.log(data);
+        alert("Done");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something went wrong");
+      });
   }
   return (
     <>
