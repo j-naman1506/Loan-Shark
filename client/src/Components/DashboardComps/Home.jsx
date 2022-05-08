@@ -14,7 +14,9 @@ import {
 
 // import { Document } from "react-pdf";
 import { useState } from "react";
+
 import { useSelector } from "react-redux";
+
 const Profile = () => {
   const authToken = useSelector((state) => state.auth.token);
   const profile = useSelector((state) => state.auth.userinfo);
@@ -112,6 +114,7 @@ const Profile = () => {
 
             <FormControl>
               {/* <Document file={file} /> */}
+
               <FormLabel fontSize={"xl"} htmlFor="aadharCard">
                 Aadhar Card
               </FormLabel>

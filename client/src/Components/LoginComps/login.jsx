@@ -7,9 +7,25 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "../utils/axios";
+import { requests } from "../utils/requests";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  logOutSuccess,
+  signInSuccess,
+} from "../../store/modules/auth/auth.action";
 import OAuthLogin from "./OAuthLogin";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const authToken = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (authToken) {
+      // dispatch(logOutSuccess({}));
+      window.location.href = "/";
+    }
+  }, []);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
@@ -26,31 +42,38 @@ const Login = () => {
 
   function HandleSubmit(e) {
     const senddata = {
-      username: email,
+      email: email,
       password: password,
     };
-    if (!senddata.username || !senddata.password) {
+    if (!senddata.email || !senddata.password) {
       alert("All Fields are Mandatory");
     } else {
-      // e.preventDefault();
-      // async function doLogin() {
-      //   const request = await axios.post(requests["doLogin"], senddata);
-      //   return request;
-      // }
-      // doLogin()
-      //   .then((res) => {
-      //     const data = res.data;
-      //     console.log(data);
-      //     const { token: token, profile: userinfo } = res.data;
-      //     setemail("");
-      //     setpassword("");
-      //     window.location.href = "/";
-      //     dispatch(signInSuccess({ token, userinfo }));
-      //   })
-      //   .catch((e) => {
-      //     alert("Something Went Wrong");
-      //     window.location.href = "/login";
-      //   });
+      e.preventDefault();
+      async function doLogin() {
+        const request = await axios.post(requests["doLogin"], senddata);
+        return request;
+      }
+      doLogin()
+        .then((res) => {
+          const data = res.data.data;
+          console.log(data);
+          if (!data || res.data.status == "faliure") {
+            alert("Something Went Wrong");
+          } else {
+            const { token: token, profile: userinfo } = data;
+            console.log(token);
+            console.log(userinfo);
+
+            setemail("");
+            setpassword("");
+            dispatch(signInSuccess({ token, userinfo }));
+            window.location.href = "/";
+          }
+        })
+        .catch((e) => {
+          alert("Something Went Wrong");
+          window.location.href = "/login";
+        });
     }
   }
 

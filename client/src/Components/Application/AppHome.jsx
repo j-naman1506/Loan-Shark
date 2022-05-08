@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import MyApp from "./MyApp";
 
 const AppHome = () => {
   return (
@@ -37,7 +38,7 @@ const AppHome = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <p>one!</p>
+            <MyApp />
           </TabPanel>
           <TabPanel>
             <p>two!</p>

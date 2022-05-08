@@ -17,7 +17,6 @@ import { useState } from "react";
 
 function RegisterComp({ onSubmit }) {
   const [userData, setUserData] = useState({
-    username: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -50,7 +49,7 @@ function RegisterComp({ onSubmit }) {
       </Heading>
 
       <form className="mt-auto flex flex-col gap-8 ">
-        <FormControl>
+        {/* <FormControl>
           <FormLabel htmlFor="username">Username</FormLabel>
           <Input
             id="username"
@@ -59,7 +58,7 @@ function RegisterComp({ onSubmit }) {
             value={userData.username}
             onChange={handleChange}
           />
-        </FormControl>
+        </FormControl> */}
 
         <FormControl>
           <FormLabel htmlFor="first_name">First Name</FormLabel>

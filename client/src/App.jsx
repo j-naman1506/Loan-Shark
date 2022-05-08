@@ -1,9 +1,11 @@
 import "./static/templates/styles.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "../src/Components/LoginComps/login";
+
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import Register from "../src/Components/LoginComps/Register";
+import Login from "../src/Components/LoginComps/login";
 import Navbar from "./Components/NavbarComps/Navbar";
-import Home from "./Components/DashboardComps/Home";
+import Profile from "./Components/DashboardComps/Profile";
 import Application from "./Components/Application/AppHome";
 
 function App() {
@@ -12,7 +14,7 @@ function App() {
       <Navbar></Navbar>
       <Router>
         <Routes>
-          <Route path="/" exact element={<Home />} />
+          <Route path="/" exact element={<Profile />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/app" exact element={<Application />} />
