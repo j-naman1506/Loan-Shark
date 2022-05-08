@@ -158,7 +158,7 @@ const EditAadharDetails = ({
 
 					<div className="flex h-full gap-4">
 						{personalDetails.aadhar_card_link ? (
-							<div className="h-96 m-0 p-0 w-full overflow-y-scroll">
+							<div className="h-56 m-0 p-0 w-full overflow-y-scroll">
 								<Viewer fileUrl={personalDetails.aadhar_card_link} />
 							</div>
 						) : (
@@ -167,7 +167,7 @@ const EditAadharDetails = ({
 							</div>
 						)}
 						{personalDetails.pan_card_link ? (
-							<div className="h-96 m-0 p-0 w-full overflow-y-scroll">
+							<div className="h-56 m-0 p-0 w-full overflow-y-scroll">
 								<Viewer fileUrl={personalDetails.pan_card_link} />
 							</div>
 						) : (
