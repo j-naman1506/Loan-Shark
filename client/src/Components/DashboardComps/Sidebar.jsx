@@ -1,6 +1,7 @@
 import { RiNumber0, RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 
 import { IconButton } from "@chakra-ui/react";
+import { shade } from "./../../static/templates/colors";
 
 const Sidebar = ({ stage, setStage }) => {
 	const iconButtons = [
@@ -16,13 +17,17 @@ const Sidebar = ({ stage, setStage }) => {
 				{iconButtons.map((icon, index) => (
 					<IconButton
 						variant="ghost"
-						color="#FFF9EC"
-						bgColor={index === stage && "#FCB1A6"}
+						color={shade[100]}
+						bgColor={index === stage && shade[700]}
 						height={"full"}
 						width={"full"}
 						_hover={{
-							color: "#5D2A42",
-							bgColor: "#FCB1A6",
+							color: shade[900],
+							bgColor: shade[600],
+						}}
+						_active={{
+							color: shade[900],
+							bgColor: shade[600],
 						}}
 						_focus={{
 							outline: "none",
