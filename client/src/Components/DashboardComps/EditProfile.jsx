@@ -8,6 +8,7 @@ const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
 			case 0:
 				return (
 					<EditProfileDetails
+						stage={stage}
 						setStage={setStage}
 						profile={profile}
 						setProfile={setProfile}
@@ -17,14 +18,15 @@ const EditProfile = ({ stage, setStage, profile, setProfile, stopEditing }) => {
 			case 1:
 				return (
 					<EditBankDetails
+						stage={stage}
 						setStage={setStage}
 						profile={profile}
 						setProfile={setProfile}
 						stopEditing={stopEditing}
 					/>
 				);
-			// case 2:
-			// 	return <EditAadharDetails />;
+			case 2:
+				return <EditAadharDetails />;
 			// case 3:
 			// 	return <EditPANDetails />;
 		}

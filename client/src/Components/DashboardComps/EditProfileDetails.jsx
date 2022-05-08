@@ -17,7 +17,13 @@ import {
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
 
-const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
+const EditProfileDetails = ({
+	stage,
+	setStage,
+	profile,
+	setProfile,
+	stopEditing,
+}) => {
 	return (
 		<>
 			<div className="bg-shade-400 h-full w-1/3">
@@ -126,7 +132,7 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
 								borderWidth: 1,
 							}}
 							size="md"
-							onClick={() => setStage(1)}
+							onClick={() => setStage(stage + 1)}
 						>
 							Continue
 						</Button>
