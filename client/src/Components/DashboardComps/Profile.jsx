@@ -14,7 +14,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="bg-shade-0 shadow-lg flex justify-start items-center mx-auto mt-40 h-[60vh] w-2/3">
+      <div className="bg-shade-0 shadow-lg flex justify-start items-center mx-auto mt-[5vh] h-[80vh] w-3/4">
         <div
           className={`bg-shade-3 h-full ${
             editting ? "w-32" : "w-4"
