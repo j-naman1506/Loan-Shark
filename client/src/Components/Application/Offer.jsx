@@ -27,30 +27,30 @@ const Offer = ({ offer }) => {
             <b>Rate:</b> {offer[0].interest * 100}% per month
           </Text>
 
-          {/* <Icon
+          <Icon
             as={expanded ? MdClose : MdExpandMore}
             w={8}
             h={8}
             onClick={() => setExpanded(!expanded)}
-          /> */}
+          />
         </div>
-        {/* <div
-					className={`${
-						expanded ? "h-full flex flex-col" : "h-0 "
-					} transition-all ease-in-out overflow-y-hidden`}
-				>
-					{offer.slice(1).map((offer) => (
-						<div className="border-t border-t-shade-900 p-4 flex gap-4">
-							<Text className="text-xl font-ubuntu">₹ {offer.principle}</Text>
-							<Text className="text-lg font-roboto">
-								<b>Tenure:</b> {offer.tenure} months
-							</Text>
-							<Text className="text-lg font-roboto">
-								<b>Rate:</b> {offer.interest * 100}% per month
-							</Text>
-						</div>
-					))}
-				</div> */}
+        <div
+          className={`${
+            expanded ? "h-full flex flex-col" : "h-0 "
+          } transition-all ease-in-out overflow-y-hidden`}
+        >
+          {offer.slice(1).map((offer) => (
+            <div className="border-t border-t-shade-900 p-4 flex gap-4">
+              <Text className="text-xl font-ubuntu">₹ {offer.principle}</Text>
+              <Text className="text-lg font-roboto">
+                <b>Tenure:</b> {offer.tenure} months
+              </Text>
+              <Text className="text-lg font-roboto">
+                <b>Rate:</b> {offer.interest * 100}% per month
+              </Text>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

@@ -2,8 +2,34 @@ import React from "react";
 import { Button, Icon, Text } from "@chakra-ui/react";
 import { BsPeopleFill } from "react-icons/bs";
 import { shade } from "./../../static/templates/colors";
+import { useState } from "react";
 function ApplicationCard({ application }) {
   const { amount, tenure, interestRate, createdAt, count } = application;
+  const [expanded, setExpanded] = useState(false);
+  const offer = [
+    {
+      id: 1,
+      principle: 50000,
+      tenure: 24,
+      interest: 0.12,
+      status: "Accepted",
+      user: "Naman",
+    },
+    {
+      id: 3,
+      principle: 75000,
+      tenure: 36,
+      interest: 0.08,
+      status: "Accepted",
+    },
+    {
+      id: 4,
+      principle: 60000,
+      tenure: 30,
+      interest: 0.08,
+      status: "Accepted",
+    },
+  ];
   return (
     <>
       <div className="w-2/3 bg-shade-100 border-2 border-shade-800 px-12  mx-auto py-8 flex flex-col gap-4 rounded-lg hover:bg-shade-700 hover:shadow-md hover:text-shade-100">
@@ -16,7 +42,7 @@ function ApplicationCard({ application }) {
               Created at : {createdAt}
             </Text>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col" onClick={() => setExpanded(!expanded)}>
             <span className="flex gap-4 items-center">
               <Icon as={BsPeopleFill} w={6} h={6} />
               <Text className="text-2xl font-ubuntu ">Offers</Text>
@@ -49,23 +75,23 @@ function ApplicationCard({ application }) {
           </Button>
         </div>
 
-        {/* <div
-					className={`${
-						expanded ? "h-full flex flex-col" : "h-0 "
-					} transition-all ease-in-out overflow-y-hidden`}
-				>
-					{offer.slice(1).map((offer) => (
-						<div className="border-t border-t-shade-900 p-4 flex gap-4">
-							<Text className="text-xl font-ubuntu">₹ {offer.principle}</Text>
-							<Text className="text-lg font-roboto">
-								<b>Tenure:</b> {offer.tenure} months
-							</Text>
-							<Text className="text-lg font-roboto">
-								<b>Rate:</b> {offer.interest * 100}% per month
-							</Text>
-						</div>
-					))}
-				</div> */}
+        <div
+          className={`${
+            expanded ? "h-full flex flex-col" : "h-0 "
+          } transition-all ease-in-out overflow-y-hidden`}
+        >
+          {offer.slice(1).map((offer) => (
+            <div className="border-t border-t-shade-900 p-4 flex gap-4">
+              <Text className="text-xl font-ubuntu">₹ {offer.principle}</Text>
+              <Text className="text-lg font-roboto">
+                <b>Tenure:</b> {offer.tenure} months
+              </Text>
+              <Text className="text-lg font-roboto">
+                <b>Rate:</b> {offer.interest * 100}% per month
+              </Text>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
