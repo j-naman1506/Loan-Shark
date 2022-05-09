@@ -69,7 +69,11 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
       <>
         <div className="bg-shade-400 h-full w-1/3 hover:brightness-75">
           <img
-            src={profilePicture}
+            src={
+              profilePicture[0] == "/"
+                ? window.env.REACT_APP_SERVER_URL + profilePicture
+                : profilePicture
+            }
             alt="Helen Cross"
             className="object-cover h-full w-full"
           />
@@ -171,9 +175,9 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
                   value={peronsalDetails.gender ? peronsalDetails.gender : ""}
                   onChange={handleChange}
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Others">Others</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="O">Others</option>
                 </Select>
               </FormControl>
             </div>

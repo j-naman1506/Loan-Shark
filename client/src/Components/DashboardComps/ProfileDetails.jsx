@@ -6,6 +6,7 @@ import { requests } from "../utils/requests";
 import axios from "../utils/axios";
 
 import { FaFemale } from "react-icons/fa";
+import { FaMale } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import { GoVerified } from "react-icons/go";
 import {
@@ -36,6 +37,7 @@ const ProfileDetails = ({ startEditing }) => {
     async function fetchDocuments() {
       try {
         const request = await axios.get(requests["getDocuments"]);
+
         const data = request.data.data;
         console.log(data);
         setDocument(data);
@@ -45,56 +47,66 @@ const ProfileDetails = ({ startEditing }) => {
         alert("Something Went Wrong");
       }
     }
+    async function fetchBankDetails() {
+      const request = await axios.get(requests["getBankDetails"]);
+      return request;
+    }
 
-    fetchDocuments();
-    //   .then((res) => {})
-    //   .catch((e) => {});
-
-    // async function fetchBankDetails() {
-    //   const request = await axios.get(requests["getBankDetails"]);
-    //   return request;
-    // }
-
-    // fetchBankDetails()
-    //   .then((res) => {
-    //     const data = res.data.data;
-    //     setBankDetail(data);
-    //   })
-    //   .catch((e) => {
-    //     alert("Something Went Wrong");
-    //   });
+    fetchDocuments()
+      .then((res) => {
+        fetchBankDetails()
+          .then((resp) => {
+            console.log(resp);
+            const data = resp.data.data;
+            console.log(data);
+            parseData(data);
+            setBankDetail(data);
+          })
+          .catch((e) => {
+            console.log(e);
+            alert("Something Went Wrong");
+          });
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Something Went Wrong");
+      });
   }, []);
 
   var userData = useSelector((state) => state.auth.userinfo);
   const parseData = (document) => {
     if (!document) return;
     console.log(document);
-    setAadharLink(document.gov_id);
-    setPanLink(document.pan_card);
-    setAadharNumber(
-      document.gov_id_num
-        .slice(0, document.gov_id_num.length - 4)
-        .replace(/./g, "X") +
-        document.gov_id_num.slice(document.gov_id_num.length - 4)
-    );
+    document.gov_id && setAadharLink(document.gov_id);
+    document.gov_id && setPanLink(document.pan_card);
+    document.gov_id_num &&
+      setAadharNumber(
+        document.gov_id_num
+          .slice(0, document.gov_id_num.length - 4)
+          .replace(/./g, "X") +
+          document.gov_id_num.slice(document.gov_id_num.length - 4)
+      );
 
-    // account_number =
-    //   bankdetail.account_number
-    //     .slice(0, bankdetail.account_number.length - 4)
-    //     .replace(/./g, "X") +
-    //   bankdetail.account_number.slice(bankdetail.account_number.length - 4);
+    document.account_number &&
+      setAccount_number(
+        document.account_number
+          .slice(0, document.account_number.length - 4)
+          .replace(/./g, "X") +
+          document.account_number.slice(document.account_number.length - 4)
+      );
     // console.log(
     //   document.pan_card_num
     //     .slice(0, document.pan_card_num.length - 4)
     //     .replace(/./g, "X")
     // );
 
-    setPan_number(
-      document.pan_card_num
-        .slice(0, document.pan_card_num.length - 4)
-        .replace(/./g, "X") +
-        document.pan_card_num.slice(document.pan_card_num.length - 4)
-    );
+    document.pan_card_num &&
+      setPan_number(
+        document.pan_card_num
+          .slice(0, document.pan_card_num.length - 4)
+          .replace(/./g, "X") +
+          document.pan_card_num.slice(document.pan_card_num.length - 4)
+      );
 
     setIsVerified(userData.is_verified);
 
@@ -105,7 +117,7 @@ const ProfileDetails = ({ startEditing }) => {
     <>
       <div className="bg-shade-200 h-full w-1/3">
         <img
-          src="https://i.pinimg.com/736x/cb/45/72/cb4572f19ab7505d552206ed5dfb3739.jpg"
+          src={window.env.REACT_APP_SERVER_URL + userData.profile_pic}
           alt="Helen Cross"
           className="object-cover h-full w-full"
         ></img>
@@ -151,7 +163,15 @@ const ProfileDetails = ({ startEditing }) => {
           className="font-roboto text-shade-4"
           color={shade[800]}
         >
-          <Icon as={FaFemale} />{" "}
+          <Icon
+            as={
+              userData.gender
+                ? userData.gender == "M"
+                  ? FaMale
+                  : FaFemale
+                : FaMale
+            }
+          />{" "}
           {userData.age ? `${userData.age} Years Old` : "Not Provided"}
         </Text>
 

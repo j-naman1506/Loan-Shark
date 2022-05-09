@@ -17,9 +17,14 @@ const Profile = () => {
   const [stage, setStage] = useState(0);
   const [profile, setProfile] = useState({});
   var userinfo = useSelector((state) => state.auth.userinfo);
+  const token = useSelector((state) => state.auth.token);
   useEffect(() => {
     async function fetchDocuments() {
       const request = await axios.get(requests["getDocuments"]);
+      return request;
+    }
+    async function fetchBankDetails() {
+      const request = await axios.get(requests["getBankDetails"]);
       return request;
     }
 
@@ -31,6 +36,20 @@ const Profile = () => {
           ...userinfo,
           ...data,
         }));
+        fetchBankDetails()
+          .then((resp) => {
+            console.log(resp);
+            const data = resp.data.data;
+            console.log(data);
+            setProfile((prevState) => ({
+              ...prevState,
+              ...data,
+            }));
+          })
+          .catch((e) => {
+            console.log(e);
+            alert("Something Went Wrong");
+          });
       })
       .catch((e) => {
         console.log(e);
@@ -44,7 +63,7 @@ const Profile = () => {
 
   const stopEditing = () => {
     setEditing(false);
-    setProfile(userinfo);
+    window.location.href = "/";
     setStage(0);
   };
 
@@ -60,8 +79,10 @@ const Profile = () => {
       }
     }
 
-    documentformData.append("gov_id_num", profile.gov_id_num);
-    documentformData.append("pan_card_num", profile.pan_card_num);
+    profile.gov_id_num &&
+      documentformData.append("gov_id_num", profile.gov_id_num);
+    profile.pan_card_num &&
+      documentformData.append("pan_card_num", profile.pan_card_num);
     console.log(documentformData);
     async function submitDocuments() {
       const request = await axios({
@@ -114,7 +135,8 @@ const Profile = () => {
         alert("Something went wrong");
       });
     var profileData = new FormData();
-    profile_pic_obj && profileData.append("profile_pic", profile_pic_obj);
+    profile.profile_pic_obj &&
+      profileData.append("profile_pic", profile.profile_pic_obj);
     profileData.append("first_name", profile.first_name);
     profileData.append("last_name", profile.last_name);
     profileData.append("age", profile.age);
@@ -134,11 +156,11 @@ const Profile = () => {
 
     editProfile()
       .then((res) => {
-        const data = res.data.data;
-        console.log(data);
-        const token = useSelector((state) => state.auth.token);
-        dispatch(signInSuccess({ token, data }));
+        const userinfo = res.data.data;
+
+        dispatch(signInSuccess({ token, userinfo }));
         alert("Done");
+        window.location.href = "/";
       })
       .catch((e) => {
         console.log(e);

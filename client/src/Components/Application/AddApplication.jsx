@@ -21,9 +21,9 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
 const AddApplication = () => {
   const [application, setApplication] = useState({
-    amount: "",
-    tenure: "",
-    interestRate: "",
+    amount: 0,
+    tenure: 0,
+    rate: 0,
   });
 
   function handleChange(e) {
@@ -33,11 +33,19 @@ const AddApplication = () => {
     }));
   }
   function HandleSubmit() {
+    // if(!application.amount || !application.rate ||)
+    console.log(typeof application.rate);
+    const data = {
+      amount: Number(application.amount),
+      tenure: Number(application.tenure),
+      rate: Number(application.rate),
+    };
+    console.log(data);
     async function createApplication() {
       const request = await axios({
         method: "POST",
         url: requests["createApplication"],
-        data: application,
+        data: data,
         headers: {
           "Content-Type": "application/json",
         },
@@ -50,9 +58,9 @@ const AddApplication = () => {
         const data = res.data.data;
         console.log(data);
         setApplication({
-          amount: "",
-          tenure: "",
-          interestRate: "",
+          amount: 0,
+          tenure: 0,
+          rate: 0,
         });
         alert("Done");
       })
@@ -72,7 +80,7 @@ const AddApplication = () => {
             <FormLabel htmlFor="amount">Amount</FormLabel>
             <Input
               id="amount"
-              type="text"
+              type="number"
               name="amount"
               borderColor={shade[800]}
               _hover={{ borderColor: shade[900] }}
@@ -89,7 +97,7 @@ const AddApplication = () => {
             <FormLabel htmlFor="tenure">Tenure</FormLabel>
             <Input
               id="tenure"
-              type="text"
+              type="number"
               name="tenure"
               placeholder="In months"
               borderColor={shade[800]}
@@ -106,15 +114,15 @@ const AddApplication = () => {
           <FormControl>
             <FormLabel htmlFor="interestRate">Interest Rate</FormLabel>
             <Input
-              id="interestRate"
-              type="text"
-              name="interestRate"
+              id="rate"
+              type="number"
+              name="rate"
               placeholder="In percentage"
               borderColor={shade[800]}
               _hover={{ borderColor: shade[900] }}
               _active={{ borderColor: shade[900] }}
               borderWidth={1}
-              value={application.interestRate}
+              value={application.rate}
               onChange={handleChange}
             />
           </FormControl>

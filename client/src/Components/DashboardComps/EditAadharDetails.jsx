@@ -162,7 +162,9 @@ const EditAadharDetails = ({
               <div className="h-56 m-0 p-0 w-full overflow-y-scroll">
                 <Viewer
                   fileUrl={
-                    window.env.REACT_APP_SERVER_URL + personalDetails.gov_id
+                    personalDetails.gov_id[0] == "/"
+                      ? window.env.REACT_APP_SERVER_URL + personalDetails.gov_id
+                      : personalDetails.gov_id
                   }
                 />
               </div>
@@ -175,7 +177,10 @@ const EditAadharDetails = ({
               <div className="h-56 m-0 p-0 w-full overflow-y-scroll">
                 <Viewer
                   fileUrl={
-                    window.env.REACT_APP_SERVER_URL + personalDetails.pan_card
+                    personalDetails.pan_card[0] == "/"
+                      ? window.env.REACT_APP_SERVER_URL +
+                        personalDetails.pan_card
+                      : personalDetails.pan_card
                   }
                 />
               </div>

@@ -39,7 +39,7 @@ const EditPaySlips = ({
     if (profile.pay_slips) {
       var temp = [];
       for (var i = 0; i < profile.pay_slips.length; i++) {
-        temp.push(profile.pay_slips[i].file);
+        temp.push({ file: profile.pay_slips[i].file });
       }
       setUrls(temp);
       setCurrentUrlIndex(0);
@@ -52,7 +52,7 @@ const EditPaySlips = ({
     const files = e.target.files;
     let fileUrls = [];
     for (let i = 0; i < files.length; i++) {
-      fileUrls.push(URL.createObjectURL(files[i]));
+      fileUrls.push({ file: URL.createObjectURL(files[i]) });
     }
     console.log(fileUrls);
     setUrls(fileUrls);
@@ -65,6 +65,7 @@ const EditPaySlips = ({
       [e.target.id]: fileUrls,
     }));
     setUrls(fileUrls);
+    console.log(personalDetails);
   };
   function handleSubmit() {
     // setProfile((prevState) => ({
@@ -109,7 +110,10 @@ const EditPaySlips = ({
                 />
                 <Viewer
                   fileUrl={
-                    window.env.REACT_APP_SERVER_URL + urls[currentUrlIndex]
+                    urls[currentUrlIndex].file.slice(0, 1) == "/"
+                      ? window.env.REACT_APP_SERVER_URL +
+                        urls[currentUrlIndex].file
+                      : urls[currentUrlIndex].file
                   }
                 />
                 <IconButton
