@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { shade } from "./../../static/templates/colors";
 import { useState } from "react";
 import AddApplication from "./AddApplication";
+import ListOfApplication from "./ListOfApplication";
 const MyApp = () => {
   const [stage, setStage] = useState(0);
   const renderStage = (_stage) => {
@@ -10,7 +11,7 @@ const MyApp = () => {
       case 0:
         return <AddApplication />;
       case 1:
-        return <AddApplication />;
+        return <ListOfApplication />;
       case 2:
         return <AddApplication />;
     }

@@ -74,8 +74,8 @@ const AddApplication = () => {
       <Heading as="h2" size="xl" textAlign="center">
         New Application
       </Heading>
-      <form className="flex flex-col h-full justify-evenly gap-8 pl-8">
-        <div className="flex gap-4 w-2/5">
+      <form className="flex flex-col w-1/2 h-full justify-evenly gap-8 pl-8 mx-auto">
+        <div className="flex gap-4 w-full">
           <FormControl>
             <FormLabel htmlFor="amount">Amount</FormLabel>
             <Input
@@ -92,7 +92,7 @@ const AddApplication = () => {
           </FormControl>
         </div>
 
-        <div className="flex gap-4 w-2/5">
+        <div className="flex gap-4 w-full">
           <FormControl>
             <FormLabel htmlFor="tenure">Tenure</FormLabel>
             <Input
@@ -110,7 +110,7 @@ const AddApplication = () => {
           </FormControl>
         </div>
 
-        <div className="flex gap-4 w-2/5">
+        <div className="flex gap-4 w-full">
           <FormControl>
             <FormLabel htmlFor="interestRate">Interest Rate</FormLabel>
             <Input
