@@ -4,7 +4,7 @@ import { RiNumber0, RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 import { IconButton } from "@chakra-ui/react";
 import { shade } from "./../../static/templates/colors";
 const Sidebar = ({ stage, setStage }) => {
-  const iconButtons = [<RiNumber0 />, <RiNumber1 />, <RiNumber2 />];
+  const iconButtons = [<RiNumber0 />, <RiNumber1 />];
   return (
     <>
       <div className="flex flex-col flex-grow h-full w-fit justify-stretch bg-shade-500 rounded-l-lg shadow-lg">
