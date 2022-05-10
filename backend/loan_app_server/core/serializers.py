@@ -98,7 +98,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         exclude = ['user',]
-        # read_only_fields = ["email"]
+        read_only_fields = ["verified"]
 
 
 class SocialSerializer(serializers.Serializer):

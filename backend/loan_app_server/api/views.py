@@ -65,6 +65,7 @@ class BankAccountView(GenericViewSet):
 		account = ''
 		_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 		try:
+			# import pdb; pdb.set_trace()
 			account, created = BankAccount.objects.get_or_create(user=request.user)
 			serializer = BankAccountSerializer(account, data=request.data)
 			if serializer.is_valid():
