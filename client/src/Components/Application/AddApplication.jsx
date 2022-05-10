@@ -19,7 +19,9 @@ import axios from "../utils/axios";
 import { requests } from "../utils/requests";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { shade } from "./../../static/templates/colors";
+import Loader from "../Loader";
 const AddApplication = () => {
+  const [isLoading, setLoading] = useState(false);
   const [application, setApplication] = useState({
     amount: 0,
     tenure: 0,
@@ -34,6 +36,7 @@ const AddApplication = () => {
   }
   function HandleSubmit() {
     // if(!application.amount || !application.rate ||)
+    setLoading(true);
     console.log(typeof application.rate);
     const data = {
       amount: Number(application.amount),
@@ -68,6 +71,7 @@ const AddApplication = () => {
         console.log(e);
         alert("Something went wrong");
       });
+    setLoading(false);
   }
   return (
     <div className="bg-shade-200 h-full w-full rounded-r-xl rounded-bl-xl p-6 flex flex-col gap-4 shadow-lg text-shade-800">
@@ -168,6 +172,7 @@ const AddApplication = () => {
           </Button>
         </ButtonGroup>
       </form>
+      <Loader isLoading={isLoading}></Loader>
     </div>
   );
 };

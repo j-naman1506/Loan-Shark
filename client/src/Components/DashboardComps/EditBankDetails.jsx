@@ -31,11 +31,23 @@ const EditBankDetails = ({
   }, []);
 
   function handleChange(e) {
+    // if (
+    //   e.target.name === "ctc" &&
+    //   e.target.value[e.target.value.length - 1] === "e"
+    // ) {
+    //   setDetails((prevState) => ({
+    //     ...prevState,
+    //     [e.target.name]: e.target.value.slice(0, -1),
+    //   }));
+    // } else {
+    // console.log("hi", e.target.value);
     setDetails((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    // }
   }
+
   function handleContinue() {
     console.log(peronsalDetails);
     setProfile((prevState) => ({
@@ -131,6 +143,20 @@ const EditBankDetails = ({
                 onChange={handleChange}
               />
             </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="ctc">CTC</FormLabel>
+              <Input
+                id="ctc"
+                type="number"
+                name="ctc"
+                borderColor={shade[800]}
+                _hover={{ borderColor: shade[900] }}
+                _active={{ borderColor: shade[900] }}
+                borderWidth={1}
+                value={peronsalDetails.ctc ? peronsalDetails.ctc : ""}
+                onChange={handleChange}
+              />
+            </FormControl>
 
             <ButtonGroup spacing="6">
               <Button
@@ -186,6 +212,7 @@ const EditBankDetails = ({
                     branch_name: "",
                     ifsc_code: "",
                     holder_name: "",
+                    ctc: "",
                   });
                 }}
               >

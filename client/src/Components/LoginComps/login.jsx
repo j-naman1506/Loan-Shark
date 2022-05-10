@@ -16,6 +16,7 @@ import {
   signInSuccess,
 } from "../../store/modules/auth/auth.action";
 import OAuthLogin from "./OAuthLogin";
+import Loader from "../Loader";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Login = () => {
   }, []);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const [isLoading, setLoading] = useState(false);
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -41,12 +42,14 @@ const Login = () => {
   }
 
   function HandleSubmit(e) {
+    setLoading(true);
     const senddata = {
       email: email,
       password: password,
     };
     if (!senddata.email || !senddata.password) {
       alert("All Fields are Mandatory");
+      setLoading(false);
     } else {
       e.preventDefault();
       async function doLogin() {
@@ -67,6 +70,7 @@ const Login = () => {
             setemail("");
             setpassword("");
             dispatch(signInSuccess({ token, userinfo }));
+            setLoading(false);
             window.location.href = "/";
           }
         })
@@ -121,6 +125,7 @@ const Login = () => {
           Login with Google
         </Button> */}
       </form>
+      <Loader isLoading={isLoading}></Loader>
     </div>
   );
 };

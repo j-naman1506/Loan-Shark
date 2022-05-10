@@ -9,7 +9,8 @@ export const requests = {
   getDocuments: "/api/document/",
   getBankDetails: "/api/account/",
   createApplication: "/api/application/",
+  acceptOffer: "/api/offer/",
   getMyApplications: "/api/application/me/",
-
+  makeOffer: "/api/offer/make-offer/",
   getOffers: "/api/offer/",
 };

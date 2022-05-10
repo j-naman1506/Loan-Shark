@@ -17,12 +17,12 @@ import { RiBankLine } from "react-icons/ri";
 import { Tooltip } from "@chakra-ui/react";
 import { saveAs } from "file-saver";
 import { shade } from "./../../static/templates/colors";
-
+import Loader from "../Loader";
 const ProfileDetails = ({ startEditing }) => {
   const authToken = useSelector((state) => state.auth.token);
   const [document, setDocument] = useState();
   const [bankdetail, setBankDetail] = useState();
-
+  const [isLoading, setLoading] = useState(false);
   const [aadhar_number, setAadharNumber] = useState("");
   const [account_number, setAccount_number] = useState("");
   const [aadhar_link, setAadharLink] = useState("");
@@ -34,6 +34,7 @@ const ProfileDetails = ({ startEditing }) => {
     if (!authToken) {
       window.location.href = "/login";
     }
+    setLoading(true);
     async function fetchDocuments() {
       try {
         const request = await axios.get(requests["getDocuments"]);
@@ -71,6 +72,7 @@ const ProfileDetails = ({ startEditing }) => {
         console.log(e);
         alert("Something Went Wrong");
       });
+    setLoading(false);
   }, []);
 
   var userData = useSelector((state) => state.auth.userinfo);
@@ -117,8 +119,12 @@ const ProfileDetails = ({ startEditing }) => {
     <>
       <div className="bg-shade-200 h-full w-1/3">
         <img
-          src={window.env.REACT_APP_SERVER_URL + userData.profile_pic}
-          alt="Helen Cross"
+          src={
+            userData.profile_pic
+              ? window.env.REACT_APP_SERVER_URL + userData.profile_pic
+              : ""
+          }
+          alt="Not Provided"
           className="object-cover h-full w-full"
         ></img>
         {isVerified ? (
@@ -250,6 +256,7 @@ const ProfileDetails = ({ startEditing }) => {
         >
           Edit
         </Button>
+        <Loader isLoading={isLoading}></Loader>
       </div>
       {/* </div> */}
     </>

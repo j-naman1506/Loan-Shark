@@ -10,10 +10,11 @@ import {
 } from "../../store/modules/auth/auth.action";
 import { requests } from "../utils/requests";
 import axios from "../utils/axios";
-
+import Loader from "../Loader";
 const Profile = () => {
   const dispatch = useDispatch();
   const [editing, setEditing] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [stage, setStage] = useState(0);
   const [profile, setProfile] = useState({});
   var userinfo = useSelector((state) => state.auth.userinfo);
@@ -68,6 +69,7 @@ const Profile = () => {
   };
 
   function onSubmit(profile) {
+    setLoading(true);
     console.log(profile);
     let documentformData = new FormData();
     profile.gov_id_obj && documentformData.append("gov_id", profile.gov_id_obj);
@@ -100,7 +102,7 @@ const Profile = () => {
       .then((res) => {
         const data = res.data.data;
         console.log(data);
-        alert("Done");
+        alert("Documents Uploaded");
       })
       .catch((e) => {
         console.log(e);
@@ -128,7 +130,7 @@ const Profile = () => {
       .then((res) => {
         const data = res.data.data;
         console.log(data);
-        alert("Done");
+        alert("Bank Details Added");
       })
       .catch((e) => {
         console.log(e);
@@ -159,13 +161,14 @@ const Profile = () => {
         const userinfo = res.data.data;
 
         dispatch(signInSuccess({ token, userinfo }));
-        alert("Done");
+        alert("Profile Updated");
         window.location.href = "/";
       })
       .catch((e) => {
         console.log(e);
         alert("Something went wrong");
       });
+    setLoading(false);
   }
   return (
     <>
@@ -189,6 +192,7 @@ const Profile = () => {
             onSubmit={onSubmit}
           />
         )}
+        <Loader isLoading={isLoading}></Loader>
       </div>
     </>
   );

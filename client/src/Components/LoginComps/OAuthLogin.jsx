@@ -1,6 +1,6 @@
 import React from "react";
 import { GoogleLogin } from "react-google-login";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { requests } from "../utils/requests";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,9 @@ import {
   logOutSuccess,
   signInSuccess,
 } from "../../store/modules/auth/auth.action";
+import Loader from "../Loader";
 function OAuthLogin() {
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const authToken = useSelector((state) => state.auth.token);
   useEffect(() => {
@@ -19,6 +21,7 @@ function OAuthLogin() {
   }, []);
   function responseGoogleSuccess(resp) {
     // console.log(resp.mc.access_token);
+    setLoading(true);
     console.log(resp);
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
@@ -36,6 +39,7 @@ function OAuthLogin() {
           console.log(userinfo);
 
           dispatch(signInSuccess({ token, userinfo }));
+
           window.location.href = "/";
         }
       })
@@ -43,6 +47,7 @@ function OAuthLogin() {
         alert("Something Went Wrong");
         // window.location.href = "/login";
       });
+    setLoading(false);
   }
   return (
     <div className="submit-google-center mx-auto">
@@ -56,6 +61,7 @@ function OAuthLogin() {
           console.log(e);
         }}
       />
+      <Loader isLoading={isLoading}></Loader>
     </div>
   );
 }

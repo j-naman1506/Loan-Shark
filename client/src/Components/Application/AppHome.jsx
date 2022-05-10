@@ -3,6 +3,7 @@ import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import Dues from "./Dues";
 import MyApp from "./MyApp";
 import MyOffers from "./MyOffers";
+import OTherApplications from "./OtherApplications";
 import React from "react";
 
 const AppHome = () => {
@@ -47,7 +48,7 @@ const AppHome = () => {
 						<Dues />
 					</TabPanel>
 					<TabPanel>
-						<p>one!</p>
+						<OTherApplications />
 					</TabPanel>
 					<TabPanel>
 						<MyOffers />
