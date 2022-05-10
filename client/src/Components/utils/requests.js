@@ -13,4 +13,7 @@ export const requests = {
   getMyApplications: "/api/application/me/",
   makeOffer: "/api/offer/make-offer/",
   getOffers: "/api/offer/",
+  getDues: "/api/bill/",
+  payEmi: "/api/bill/",
+  logout: "/auth/logout/",
 };

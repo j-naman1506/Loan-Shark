@@ -9,7 +9,7 @@ import Loader from "../Loader";
 const MyOffers = () => {
   const [isLoading, setLoading] = useState(false);
   const [offers, setOffers] = useState();
-
+  const [changed, setChanged] = useState(false);
   useEffect(() => {
     setLoading(true);
     async function getOffers() {
@@ -27,7 +27,7 @@ const MyOffers = () => {
         alert("Something Went Wrong");
       });
     setLoading(false);
-  }, []);
+  }, [changed]);
 
   return offers ? (
     <div className="min-h-1/2 w-2/3 my-3 mx-auto p-8 bg-shade-200 rounded-lg shadow-lg">
@@ -36,7 +36,7 @@ const MyOffers = () => {
       </Heading>
       <div className="flex flex-col h-full justify-evenly items-center gap-8 p-8">
         {offers.map((offer) => (
-          <Offer offer={offer} />
+          <Offer offer={offer} setChanged={setChanged} />
         ))}
       </div>
       <Loader isLoading={isLoading}></Loader>

@@ -69,11 +69,11 @@ const EditBankDetails = ({
   return (
     peronsalDetails && (
       <>
-        <div className="bg-shade-200 h-full w-full rounded-r-xl py-6 px-12 flex flex-col gap-4">
+        <div className="bg-shade-200 h-full w-full rounded-r-xl py-2 px-12 flex flex-col gap-4">
           <Heading as="h2" size="xl" textAlign="center">
             Bank Details
           </Heading>
-          <form className="flex flex-col h-full justify-evenly gap-8 ">
+          <form className="flex flex-col h-full justify-evenly gap-4 ">
             <FormControl>
               <FormLabel htmlFor="account_number">Account Number</FormLabel>
               <Input

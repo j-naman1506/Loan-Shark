@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import axios from "../utils/axios";
 import { requests } from "../utils/requests";
 import Loader from "../Loader";
+
 function ApplicationCard({ application, setApplication, showApplicant }) {
   console.log(application);
   const [isLoading, setLoading] = useState(false);
@@ -187,12 +188,17 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
               ₹ {amount}
             </Text>
             {showApplicant && (
-              <Text className="text-2xl font-ubuntu flex flex-col">
-                Applicant : {application ? application.user.full_name : ""}
-              </Text>
+              <div>
+                <Text className="text-2xl font-ubuntu flex flex-col">
+                  Applicant : {application ? application.user.full_name : ""}
+                </Text>
+                <Text className="text-2xl font-ubuntu flex flex-col">
+                  CIBIL SCORE : {application ? application.cibil_score : ""}
+                </Text>
+              </div>
             )}
             <Text className="text-xl font-ubuntu flex flex-col">
-              Created at : {created_on}
+              Created at : {created_on.slice(0, 10)}
             </Text>
           </div>
           <div className="flex flex-col" onClick={() => setExpanded(!expanded)}>
@@ -228,6 +234,14 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
             >
               Delete
             </Button>
+          ) : application.status == "A" ? (
+            <Text marginLeft="auto">
+              <b>Status: Accepted</b>
+            </Text>
+          ) : application.status == "R" ? (
+            <Text marginLeft="auto">
+              <b>Status: Rejected</b>
+            </Text>
           ) : (
             <></>
           )}
@@ -448,15 +462,17 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
                 ) : (
                   <>
                     {offer.status == "A" ? (
-                      <Text>
+                      <Text marginLeft="auto">
                         <b>Accepted</b>
                       </Text>
                     ) : offer.status == "R" ? (
-                      <Text>
+                      <Text marginLeft="auto">
                         <b>Rejected</b>
                       </Text>
                     ) : (
-                      <></>
+                      <Text marginLeft="auto">
+                        <b>By: {offer.lender.full_name}</b>
+                      </Text>
                     )}
                   </>
                 )}

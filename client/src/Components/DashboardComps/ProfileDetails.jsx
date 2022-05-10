@@ -1,4 +1,12 @@
-import { Button, Icon, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Icon,
+  Stat,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
+  Text,
+} from "@chakra-ui/react";
 import { HiOutlineIdentification, HiOutlineMail } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -35,6 +43,7 @@ const ProfileDetails = ({ startEditing }) => {
       window.location.href = "/login";
     }
     setLoading(true);
+
     async function fetchDocuments() {
       try {
         const request = await axios.get(requests["getDocuments"]);
@@ -122,7 +131,7 @@ const ProfileDetails = ({ startEditing }) => {
           src={
             userData.profile_pic
               ? window.env.REACT_APP_SERVER_URL + userData.profile_pic
-              : ""
+              : "https://yt3.ggpht.com/a/AATXAJwSVMuE-eAnwzJvoEolJQpmR8olgQdlXks9qA=s900-c-k-c0xffffffff-no-rj-mo"
           }
           alt="Not Provided"
           className="object-cover h-full w-full"
@@ -148,13 +157,31 @@ const ProfileDetails = ({ startEditing }) => {
         )}
       </div>
       <div className="bg-shade-200 h-full w-2/3 rounded-r-xl px-24 flex flex-col justify-center gap-8">
-        <Text
-          fontSize="5xl"
-          className="font-roboto text-center capitalize pb-12"
-          color={shade[900]}
-        >
-          {`${userData.first_name} ${userData.last_name}`.toLowerCase()}
-        </Text>
+        <div className="flex items-center justify-between w-full">
+          <Text
+            fontSize="5xl"
+            className="font-roboto text-center capitalize"
+            color={shade[900]}
+          >
+            {`${userData.first_name} ${userData.last_name}`.toLowerCase()}
+          </Text>
+          {userData.verified && (
+            <div className="flex flex-col mt-12">
+              <Stat textAlign="right">
+                <StatLabel color={shade[500]}>CIBIL Score</StatLabel>
+                <StatNumber color={shade[800]}>
+                  {userData.cibil_score}
+                </StatNumber>
+              </Stat>
+              <Stat textAlign="right">
+                <StatLabel color={shade[500]}>Eligible Amount</StatLabel>
+                <StatNumber color={shade[800]}>
+                  ₹ {userData.eligible_amount.toLocaleString("en-IN")}
+                </StatNumber>
+              </Stat>
+            </div>
+          )}
+        </div>
 
         <Text
           fontSize="2xl"
