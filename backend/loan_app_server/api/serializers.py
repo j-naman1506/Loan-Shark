@@ -1,6 +1,7 @@
 from email.mime import application
 from rest_framework import serializers
 from api.models import Application, Offer, Bill, Transaction
+from core.models import Profile
 from core.serializers import UserSerializer
 
 from core.models import Document, PaySlip, BankAccount
@@ -36,9 +37,13 @@ class ApplicationSerializer(serializers.ModelSerializer):
 	"""
 	user = UserSerializer(read_only=True)
 	offers_count = serializers.SerializerMethodField()
+	cibil_score = serializers.SerializerMethodField()
 
 	def get_offers_count(self, instance):
 		return Offer.objects.filter(application=instance).count()
+
+	def get_cibil_score(self, instance):
+		return Profile.objects.get(user=instance.user).cibil_score
 
 	class Meta:
 		model = Application
