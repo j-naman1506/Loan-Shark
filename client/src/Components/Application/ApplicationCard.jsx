@@ -18,7 +18,6 @@ import { requests } from "../utils/requests";
 import Loader from "../Loader";
 
 function ApplicationCard({ application, setApplication, showApplicant }) {
-  console.log(application);
   const [isLoading, setLoading] = useState(false);
   const { amount, tenure, rate, created_on, offers_count, applicant } =
     application;
@@ -34,9 +33,8 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
 
   useEffect(() => {
     setLoading(true);
-    console.log(application.id);
+
     async function getOffers() {
-      console.log(application.id);
       const request = await axios.get(
         requests["createApplication"] + application.id + "/offers/"
       );
@@ -45,17 +43,15 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
     getOffers()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         setOffers(data);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went rong");
       });
     setLoading(false);
   }, [offerChanged]);
   function handleDelete() {
-    console.log(application.id);
     setLoading(true);
     async function deleteApplication() {
       const request = await axios.delete(
@@ -69,7 +65,6 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setApplication((prevState) => !prevState);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
@@ -88,14 +83,13 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setChanged(!offerChanged);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
   }
   function acceptApplication() {
     setLoading(true);
-    console.log("Called");
+
     async function acceptapplication() {
       const request = await axios.post(
         requests["createApplication"] + application.id + "/accept/"
@@ -107,7 +101,6 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setApplication((prevState) => !prevState);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
@@ -125,7 +118,6 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setApplication((prevState) => !prevState);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
@@ -144,7 +136,6 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setChanged(!offerChanged);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
@@ -173,7 +164,6 @@ function ApplicationCard({ application, setApplication, showApplicant }) {
         setIsOpen(!isOpen);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);

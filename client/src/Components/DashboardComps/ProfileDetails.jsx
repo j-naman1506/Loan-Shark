@@ -49,11 +49,10 @@ const ProfileDetails = ({ startEditing }) => {
         const request = await axios.get(requests["getDocuments"]);
 
         const data = request.data.data;
-        console.log(data);
+
         setDocument(data);
         parseData(data);
       } catch (e) {
-        console.log(e);
         alert("Something Went Wrong");
       }
     }
@@ -66,19 +65,16 @@ const ProfileDetails = ({ startEditing }) => {
       .then((res) => {
         fetchBankDetails()
           .then((resp) => {
-            console.log(resp);
             const data = resp.data.data;
-            console.log(data);
+
             parseData(data);
             setBankDetail(data);
           })
           .catch((e) => {
-            console.log(e);
             alert("Something Went Wrong");
           });
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
@@ -87,7 +83,7 @@ const ProfileDetails = ({ startEditing }) => {
   var userData = useSelector((state) => state.auth.userinfo);
   const parseData = (document) => {
     if (!document) return;
-    console.log(document);
+
     document.gov_id && setAadharLink(document.gov_id);
     document.gov_id && setPanLink(document.pan_card);
     document.gov_id_num &&
@@ -120,8 +116,6 @@ const ProfileDetails = ({ startEditing }) => {
       );
 
     setIsVerified(userData.is_verified);
-
-    console.log(userData);
   };
 
   return (

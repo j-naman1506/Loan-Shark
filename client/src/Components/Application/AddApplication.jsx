@@ -37,13 +37,11 @@ const AddApplication = () => {
   function HandleSubmit() {
     // if(!application.amount || !application.rate ||)
     setLoading(true);
-    console.log(typeof application.rate);
     const data = {
       amount: Number(application.amount),
       tenure: Number(application.tenure),
       rate: Number(application.rate),
     };
-    console.log(data);
     async function createApplication() {
       const request = await axios({
         method: "POST",
@@ -59,7 +57,6 @@ const AddApplication = () => {
     createApplication()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
         setApplication({
           amount: 0,
           tenure: 0,
@@ -68,7 +65,6 @@ const AddApplication = () => {
         alert("Done");
       })
       .catch((e) => {
-        console.log(e);
         alert("Something went wrong");
       });
     setLoading(false);

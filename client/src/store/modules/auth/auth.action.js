@@ -10,9 +10,7 @@ export const signInSuccess = (data) => (dispatch) => {
       data,
       type: SIGN_IN_SUCCESS,
     },
-    () => {
-      console.log("callback");
-    }
+    () => {}
   );
 };
 

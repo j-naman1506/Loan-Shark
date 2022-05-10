@@ -16,11 +16,10 @@ const OTherApplications = () => {
     getOtherApplications()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         setApplication(data);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);

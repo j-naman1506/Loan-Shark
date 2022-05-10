@@ -31,18 +31,15 @@ const Profile = () => {
   const [paySlips, setPaySlips] = useState([]);
 
   const handleFileChange = (event) => {
-    // console.log(event.target.files[0]);
+    //
     const id = event.target.name;
     if (id == "1") setAadharCard(event.target.files[0]);
     else if (id == "2") setPANCard(event.target.files[0]);
     else {
       setPaySlips(event.target.files);
-      console.log(paySlips);
     }
   };
-  const submitForm = () => {
-    console.log(paySlips);
-  };
+  const submitForm = () => {};
 
   return (
     <Grid

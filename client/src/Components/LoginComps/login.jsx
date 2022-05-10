@@ -17,6 +17,7 @@ import {
 } from "../../store/modules/auth/auth.action";
 import OAuthLogin from "./OAuthLogin";
 import Loader from "../Loader";
+import { shade } from "./../../static/templates/colors";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -59,13 +60,11 @@ const Login = () => {
       doLogin()
         .then((res) => {
           const data = res.data.data;
-          console.log(data);
+
           if (!data || res.data.status == "faliure") {
             alert("Something Went Wrong");
           } else {
             const { token: token, profile: userinfo } = data;
-            console.log(token);
-            console.log(userinfo);
 
             setemail("");
             setpassword("");
@@ -86,7 +85,7 @@ const Login = () => {
       <Heading
         as="h2"
         size="xl"
-        className="text-center font-bold text-cyan-700"
+        className="text-center font-bold text-shade-700"
       >
         Say those secret words!
       </Heading>
@@ -116,8 +115,21 @@ const Login = () => {
           <FormHelperText>Choose a strong one.</FormHelperText>
         </FormControl>
 
-        <Button colorScheme="cyan" size="md" onClick={HandleSubmit}>
-          Login
+        <Button
+          bgColor={shade[800]}
+          textColor={shade[200]}
+          borderWidth={1}
+          borderColor={shade[100]}
+          _hover={{
+            bgColor: shade[200],
+            textColor: shade[900],
+            borderColor: shade[900],
+            borderWidth: 1,
+          }}
+          size="md"
+          onClick={HandleSubmit}
+        >
+          Register
         </Button>
         <hr className="font-bold w-full border-t-1 border-gray-300" />
         <OAuthLogin />

@@ -32,28 +32,25 @@ const Profile = () => {
     fetchDocuments()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         setProfile((prevState) => ({
           ...userinfo,
           ...data,
         }));
         fetchBankDetails()
           .then((resp) => {
-            console.log(resp);
             const data = resp.data.data;
-            console.log(data);
+
             setProfile((prevState) => ({
               ...prevState,
               ...data,
             }));
           })
           .catch((e) => {
-            console.log(e);
             alert("Something Went Wrong");
           });
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
   }, []);
@@ -70,7 +67,7 @@ const Profile = () => {
 
   function onSubmit(profile) {
     setLoading(true);
-    console.log(profile);
+
     let documentformData = new FormData();
     profile.gov_id_obj && documentformData.append("gov_id", profile.gov_id_obj);
     profile.pan_card_obj &&
@@ -85,7 +82,7 @@ const Profile = () => {
       documentformData.append("gov_id_num", profile.gov_id_num);
     profile.pan_card_num &&
       documentformData.append("pan_card_num", profile.pan_card_num);
-    console.log(documentformData);
+
     async function submitDocuments() {
       const request = await axios({
         method: "POST",
@@ -101,11 +98,10 @@ const Profile = () => {
     submitDocuments()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         alert("Documents Uploaded");
       })
       .catch((e) => {
-        console.log(e);
         alert("Something went wrong");
       });
     const bankdata = {
@@ -129,11 +125,10 @@ const Profile = () => {
     editBankDetail()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         alert("Bank Details Added");
       })
       .catch((e) => {
-        console.log(e);
         alert("Something went wrong");
       });
     var profileData = new FormData();
@@ -165,7 +160,6 @@ const Profile = () => {
         window.location.href = "/";
       })
       .catch((e) => {
-        console.log(e);
         alert("Something went wrong");
       });
     setLoading(false);

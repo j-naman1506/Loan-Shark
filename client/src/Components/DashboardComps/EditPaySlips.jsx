@@ -34,7 +34,6 @@ const EditPaySlips = ({
   const [urls, setUrls] = useState([]);
   const [currentUrlIndex, setCurrentUrlIndex] = useState(null);
   useEffect(() => {
-    console.log(profile);
     setDetails(profile);
     if (profile.pay_slips) {
       var temp = [];
@@ -43,10 +42,8 @@ const EditPaySlips = ({
       }
       setUrls(temp);
       setCurrentUrlIndex(0);
-      console.log(urls);
     }
   }, []);
-  console.log(urls);
 
   const onChange = (e) => {
     const files = e.target.files;
@@ -54,7 +51,7 @@ const EditPaySlips = ({
     for (let i = 0; i < files.length; i++) {
       fileUrls.push({ file: URL.createObjectURL(files[i]) });
     }
-    console.log(fileUrls);
+
     setUrls(fileUrls);
     if (files.length > 0) {
       setCurrentUrlIndex(0);
@@ -65,7 +62,6 @@ const EditPaySlips = ({
       [e.target.id]: fileUrls,
     }));
     setUrls(fileUrls);
-    console.log(personalDetails);
   };
   function handleSubmit() {
     // setProfile((prevState) => ({
@@ -76,14 +72,11 @@ const EditPaySlips = ({
   }
 
   function handleBack() {
-    console.log(personalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...personalDetails,
     }));
     setStage(stage - 1);
-
-    console.log(profile);
   }
 
   return (

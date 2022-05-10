@@ -24,7 +24,6 @@ const EditAadharDetails = ({
   const [personalDetails, setDetails] = useState({});
 
   useEffect(() => {
-    console.log(profile);
     setDetails(profile);
   }, []);
 
@@ -53,22 +52,18 @@ const EditAadharDetails = ({
     }));
   }
   function handleContinue() {
-    console.log(personalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...personalDetails,
     }));
     setStage(stage + 1);
-    console.log(profile);
   }
   function handleBack() {
-    console.log(personalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...personalDetails,
     }));
     setStage(stage - 1);
-    console.log(profile);
   }
 
   if (!personalDetails) return null;

@@ -26,7 +26,6 @@ const EditBankDetails = ({
 }) => {
   const [peronsalDetails, setDetails] = useState();
   useEffect(() => {
-    console.log(profile);
     setDetails(profile);
   }, []);
 
@@ -40,7 +39,7 @@ const EditBankDetails = ({
     //     [e.target.name]: e.target.value.slice(0, -1),
     //   }));
     // } else {
-    // console.log("hi", e.target.value);
+    //
     setDetails((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -49,22 +48,18 @@ const EditBankDetails = ({
   }
 
   function handleContinue() {
-    console.log(peronsalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...peronsalDetails,
     }));
     setStage(stage + 1);
-    console.log(profile);
   }
   function handleBack() {
-    console.log(peronsalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...peronsalDetails,
     }));
     setStage(stage - 1);
-    console.log(profile);
   }
   return (
     peronsalDetails && (

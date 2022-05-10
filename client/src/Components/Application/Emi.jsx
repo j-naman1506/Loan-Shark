@@ -17,7 +17,6 @@ const Emi = ({ emi, setChanged }) => {
         alert("Paid");
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);

@@ -19,7 +19,6 @@ const Register = () => {
     }
   }, []);
   function HandleSubmit(userData) {
-    console.log(userData);
     setLoading(true);
     if (
       !userData.first_name ||
@@ -38,13 +37,11 @@ const Register = () => {
       doRegister()
         .then((res) => {
           const data = res.data.data;
-          console.log(data);
+
           if (!data || res.data.status == "faliure") {
             alert("Something Went Wrong");
           } else {
             const { token: token, profile: userinfo } = data;
-            console.log(token);
-            console.log(userinfo);
 
             // const init = {
             //   username: "",
@@ -60,9 +57,7 @@ const Register = () => {
             window.location.href = "/";
           }
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch((e) => {});
     }
   }
   return (

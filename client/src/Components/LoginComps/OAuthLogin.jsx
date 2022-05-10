@@ -20,9 +20,9 @@ function OAuthLogin() {
     }
   }, []);
   function responseGoogleSuccess(resp) {
-    // console.log(resp.mc.access_token);
+    //
     setLoading(true);
-    console.log(resp);
+
     async function doOAuthLogin() {
       const request = await axios.post(requests["doOAuthLogin"], resp);
       return request;
@@ -30,13 +30,11 @@ function OAuthLogin() {
     doOAuthLogin()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         if (!data || res.data.status == "faliure") {
           alert("Something Went Wrong");
         } else {
           const { token: token, profile: userinfo } = data;
-          console.log(token);
-          console.log(userinfo);
 
           dispatch(signInSuccess({ token, userinfo }));
 
@@ -57,9 +55,7 @@ function OAuthLogin() {
         accessType="offline"
         scope="profile"
         onSuccess={responseGoogleSuccess}
-        onFailure={(e) => {
-          console.log(e);
-        }}
+        onFailure={(e) => {}}
       />
       <Loader isLoading={isLoading}></Loader>
     </div>

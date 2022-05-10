@@ -26,7 +26,7 @@ const Dues = () => {
     getDues()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         // setEMI(data);
 
         let oes = [],
@@ -50,7 +50,6 @@ const Dues = () => {
         setPaidEmis(pes);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);

@@ -24,7 +24,6 @@ const Navbar = () => {
         window.location.href = "/login";
       })
       .catch((e) => {
-        console.log(e);
         alert("Cannot log out");
       });
     setLoading(false);

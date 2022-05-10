@@ -26,10 +26,8 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
       : "https://yt3.ggpht.com/a/AATXAJwSVMuE-eAnwzJvoEolJQpmR8olgQdlXks9qA=s900-c-k-c0xffffffff-no-rj-mo"
   );
   useEffect(() => {
-    console.log(peronsalDetails);
     setDetails(profile);
   }, []);
-  console.log(profile.gender);
 
   function handleChange(e) {
     if (e.target) {
@@ -45,13 +43,11 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
     }
   }
   function handleContinue() {
-    console.log(peronsalDetails);
     setProfile((prevState) => ({
       ...profile,
       ...peronsalDetails,
     }));
     setStage(1);
-    console.log(profile);
   }
 
   const handleProfilePictureChange = (e) => {
@@ -60,7 +56,7 @@ const EditProfileDetails = ({ setStage, profile, setProfile, stopEditing }) => {
       [e.target.name]: e.target.files[0],
       [e.target.id]: URL.createObjectURL(e.target.files[0]),
     }));
-    console.log(URL.createObjectURL(e.target.files[0]));
+
     setProfilePicture(URL.createObjectURL(e.target.files[0]));
   };
 

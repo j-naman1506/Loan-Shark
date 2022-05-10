@@ -19,11 +19,10 @@ const MyOffers = () => {
     getOffers()
       .then((res) => {
         const data = res.data.data;
-        console.log(data);
+
         setOffers(data);
       })
       .catch((e) => {
-        console.log(e);
         alert("Something Went Wrong");
       });
     setLoading(false);
