@@ -12,7 +12,8 @@ class CibilScore():
             user = self.profile.user
             bank_acc = BankAccount.objects.get(user=user)
             self.profile.cibil_score = 450
-            self.profile.eligible_amount = (bank_acc.ctc*0.4)//12
+            # self.profile.eligible_amount = (bank_acc.ctc*0.4)//12
+            self.profile.eligible_amount = 500000
             self.profile.save()
 
     def recalculate_cibil_score(self):
