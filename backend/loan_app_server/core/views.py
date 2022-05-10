@@ -301,17 +301,21 @@ class ProfileAPIView(APIView):
             last_name: "",
             age: "",
             location: "",
-            gender: ""
+            gender: "",
+            profile_pic: FILE
         }
         """
         data = ""
         try:
             user = request.user
-            userprofile = Profile.objects.get_or_create(user=user)
+            userprofile, created = Profile.objects.get_or_create(user=user)
             serializer = ProfileSerializer(userprofile, data=request.data)
-            if serializer.is_valid():
+            if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                data = serializer.data()
+                user.first_name = request.data["first_name"]
+                user.last_name = request.data["last_name"]
+                user.save()
+                data = serializer.data
                 data_status_ = "success"
                 status_ = status.HTTP_200_OK
                 message = "Profile updated successfully."
@@ -423,11 +427,8 @@ class DeleteUserAPIView(APIView):
             obj = Profile.objects.get(user=request.user)
             obj.user.delete()
             obj.delete()
-            queryset = Profile.objects.filter(is_active=True)
-            serializer = ProfileSerializer(queryset, many=True)
             message = "User details deleted successfully"
             status_ = status.HTTP_200_OK
-            data = serializer.data
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

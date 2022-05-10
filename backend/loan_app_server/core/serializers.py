@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile, Document
+from .models import Profile
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -30,10 +30,19 @@ class ChangePasswordSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     """Handles serialization and deserialization of User objects."""
 
+    full_name = serializers.SerializerMethodField()
+
+    def get_full_name(self, instance):
+        if not instance.first_name:
+            return ""
+        if not instance.last_name:
+            return instance.first_name
+        return " ".join([instance.first_name, instance.last_name])
+
     class Meta:
         model = User
         fields = (
-            'pk', 'email', 'username', 'first_name', 'last_name',
+            'pk', 'email', 'username', 'first_name', 'last_name', 'full_name'
         )
 
         read_only_fields = ('token', 'email')
@@ -56,6 +65,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     last_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     # doc_num = serializers.SerializerMethodField()
+    # first_name = serializers.CharField(source="user.first_name")
+    # last_name = serializers.CharField(source="user.last_name")
+    # email = serializers.CharField(source="user.email", read_only=True)
 
     def get_first_name(self, instance):
         return instance.user.first_name
@@ -78,9 +90,15 @@ class ProfileSerializer(serializers.ModelSerializer):
     #         pass
     #     return data
 
+    # def update(self, instance, validated_data):
+    #     instance.user.first_name = validated_data.get('first_name', instance.user.first_name)
+    #     instance.user.last_name = validated_data.get('first_name', instance.user.last_name)
+    #     super().update(instance, validated_data)
+
     class Meta:
         model = Profile
         exclude = ['user',]
+        # read_only_fields = ["email"]
 
 
 class SocialSerializer(serializers.Serializer):

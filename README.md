@@ -19,10 +19,13 @@ Django Server Setup -
 5. Cd into loan_app_server directory
     > cd ./loan_app_server
 
-6. Add .env file in the directory with Google OAuth credentials
+6. Add .env file in the directory with following variables
     > touch .env
     > GOOGLE_OAUTH2_KEY=""
     > GOOGLE_OAUTH2_SECRET=""
+    > EMAIL_HOST_USER=""
+    > EMAIL_HOST_PASSWORD=""
+
     
 
 7. Run migrations

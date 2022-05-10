@@ -1,14 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from core.validators import validate_file_extension
 # from django.utils.timezone import get_current_timezone
 # from django.utils import timezone
 # from datetime import datetime, timedelta
-import uuid
+# import uuid
 
 GENDER_CHOICES = (
 		('M', 'Male'),
 		('F', 'Female'),
+		('O', 'Others'),
 	)
 
 TYPE_EMAIL = [
@@ -37,10 +39,11 @@ class BaseContent(models.Model):
 
 class BankAccount(BaseContent):
 	user = models.ForeignKey(User, related_name="bank_account", on_delete=models.CASCADE)
-	account_no = models.CharField(max_length=18, null=True, blank=True)
+	account_number = models.CharField(max_length=18, null=True, blank=True)
 	ifsc_code = models.CharField(max_length=20, null=True, blank=True)
 	branch_name = models.CharField(max_length=30, null=True, blank=True)
 	holder_name = models.CharField(max_length=30, null=True, blank=True)
+	ctc = models.IntegerField(default=0, null=True, blank=True)
 
 	class Meta:
 		verbose_name = 'Bank Account'
@@ -50,13 +53,13 @@ class BankAccount(BaseContent):
 
 class Document(BaseContent):
 	def user_directory_path(instance, filename):
-		return 'user_{0}/{1}'.format(instance.user.id, uuid.uuid4())
+		return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 	gov_id_num = models.CharField(max_length=20, null=True, blank=True)
 	pan_card_num = models.CharField(max_length=15, null=True, blank=True)
 	user = models.OneToOneField(User, related_name="documents", on_delete=models.CASCADE)
-	pan_card = models.FileField(upload_to=user_directory_path)
-	gov_id = models.FileField(upload_to=user_directory_path)
+	pan_card = models.FileField(upload_to=user_directory_path, validators=[validate_file_extension], null=True)
+	gov_id = models.FileField(upload_to=user_directory_path, validators=[validate_file_extension], null=True)
 
 	class Meta:
 		verbose_name = 'Document'
@@ -66,7 +69,7 @@ class Document(BaseContent):
 
 class PaySlip(BaseContent):
 	def user_directory_path(instance, filename):
-		return 'user_{0}/{1}'.format(instance.document.user.id, uuid.uuid4())
+		return 'user_{0}/{1}'.format(instance.document.user.id, filename)
 
 	document = models.ForeignKey(Document, related_name="pay_slips", on_delete=models.CASCADE)
 	file = models.FileField(upload_to=user_directory_path)

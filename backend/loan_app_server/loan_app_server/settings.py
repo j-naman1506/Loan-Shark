@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,7 +69,7 @@ ROOT_URLCONF = 'loan_app_server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,8 +120,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Google OAuth credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_OAUTH2_SECRET')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -139,7 +142,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, "templates"),
+    os.path.join(BASE_DIR, "templates"),
 ]
 
 MEDIA_URL = 'media/'
@@ -161,7 +164,7 @@ REST_FRAMEWORK = {
 }
 
 # CORS properties
-SITE_URL = 'http://127.0.0.1:8000'
+SITE_URL = os.getenv("SITE_URL")
 CORS_ORIGIN_ALLOW_ALL = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -188,3 +191,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+# Email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_NAME = os.getenv('EMAIL_HOST_NAME')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# EMAIL_FOR_NEED_HELP = ""
