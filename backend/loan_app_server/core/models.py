@@ -45,6 +45,11 @@ class BankAccount(BaseContent):
 	holder_name = models.CharField(max_length=30, null=True, blank=True)
 	ctc = models.IntegerField(default=0, null=True, blank=True)
 
+	def is_completed(self):
+		if self.account_number and self.ifsc_code and self.branch_name and self.holder_name:
+			return True
+		return False
+
 	class Meta:
 		verbose_name = 'Bank Account'
 		verbose_name_plural = 'Bank Accounts'

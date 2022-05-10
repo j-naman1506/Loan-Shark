@@ -1,5 +1,5 @@
-from django.core.management.base import BaseCommand, CommandError
-from api.models import Bill, Offer
+from django.core.management.base import BaseCommand
+from api.models import Bill
 from datetime import date
 from dateutil.relativedelta import relativedelta
 import sys

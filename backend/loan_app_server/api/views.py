@@ -14,6 +14,7 @@ from api.handlers.email_handler import EmailHandler
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from uuid import uuid4
+from core.utils import CibilScore
 
 class BankAccountView(GenericViewSet):
 	"""
@@ -68,6 +69,12 @@ class BankAccountView(GenericViewSet):
 			serializer = BankAccountSerializer(account, data=request.data)
 			if serializer.is_valid():
 				serializer.save()
+				if account.is_completed():
+					profile = Profile.objects.get(user=request.user)
+					profile.verified = True
+					profile.save()
+					cs = CibilScore(profile=profile)
+					cs.set_initial_cibil_score()
 				data = serializer.data
 				message = "Successful"
 				_status = status.HTTP_200_OK
@@ -305,7 +312,8 @@ class ApplicationViewSet(ModelViewSet):
 		_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 		try:
 			application = Application.objects.create(user=request.user)
-			eligible_amount = Profile.objects.get(user=request.user).eligible_amount
+			profile = Profile.objects.get(user=request.user)
+			eligible_amount = profile.eligible_amount
 			if request.data["amount"] <= eligible_amount:
 				serializer = ApplicationSerializer(application, data=request.data)
 				if serializer.is_valid(raise_exception=True):
@@ -314,6 +322,8 @@ class ApplicationViewSet(ModelViewSet):
 					email_data = {
 						"application_data" : data,
 					}
+					profile.eligible_amount -= application.amount
+					profile.save()
 					eh = EmailHandler(
 						to=request.user,
 						cc_list=[],
@@ -773,7 +783,28 @@ class BillViewSet(ModelViewSet):
 	permission_classes = [IsAuthenticated,]
 
 	def get_queryset(self):
-		return Bill.objects.filter(sender=self.request.sender)
+		return Bill.objects.filter(sender=self.request.user)
+
+	def list(self, request, pk=None, *args, **kwargs):
+		"""
+		Get list of user bills
+		"""
+		data = ""
+		_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+		try:
+			bills = self.get_queryset()
+			serializer = BillSerializer(bills, many=True)
+			data = serializer.data
+			message = "Successful"
+			_status = status.HTTP_200_OK
+		except Exception as e:
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+			print(exc_type, fname, exc_tb.tb_lineno)
+			print(str(e))
+			message = "failure"
+		return Response(data=data, message=message, status=_status)
+
 
 	@action(detail=True, methods=["post",], url_path="pay")
 	def pay(self, request, *args, **kwargs):
@@ -788,11 +819,15 @@ class BillViewSet(ModelViewSet):
 			if bill.sender == request.user:
 				#TODO: implement gateway here
 				bill.is_paid = True
+				bill.save()
 				transaction, created = Transaction.objects.get_or_create(
 					bill = bill,
 					transaction_id = uuid4(),
 					status = "C"
 				)
+				profile = Profile.objects.get(user=request.user)
+				profile.eligible_amount += (bill.offer.application.amount//bill.offer.tenure) * (profile.cibil_score/700)
+				profile.save()
 				serializer = BillSerializer(bill)
 				data = serializer.data
 				message = "Successful"

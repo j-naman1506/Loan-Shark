@@ -1,8 +1,9 @@
 from api.handlers.email_notification import EmailNotification
 from core.models import EmailNotificationLog
+from django.conf import settings
 
 class EmailHandler():
-    disable = True
+    disable = settings.DEBUG
 
     def __init__(self, to, cc_list, bcc_list, data):
         self.en = EmailNotification()
