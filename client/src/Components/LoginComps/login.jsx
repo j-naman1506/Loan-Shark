@@ -129,7 +129,7 @@ const Login = () => {
           size="md"
           onClick={HandleSubmit}
         >
-          Register
+          Login
         </Button>
         <hr className="font-bold w-full border-t-1 border-gray-300" />
         <OAuthLogin />

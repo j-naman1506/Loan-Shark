@@ -74,6 +74,7 @@ const EditBankDetails = ({
               <Input
                 id="account_number"
                 type="text"
+                required
                 name="account_number"
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
@@ -96,6 +97,7 @@ const EditBankDetails = ({
                 name="holder_name"
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
+                required
                 _active={{ borderColor: shade[900] }}
                 borderWidth={1}
                 value={
@@ -113,6 +115,7 @@ const EditBankDetails = ({
                 name="ifsc_code"
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
+                required
                 _active={{ borderColor: shade[900] }}
                 borderWidth={1}
                 value={
@@ -131,6 +134,7 @@ const EditBankDetails = ({
                 borderColor={shade[800]}
                 _hover={{ borderColor: shade[900] }}
                 _active={{ borderColor: shade[900] }}
+                required
                 borderWidth={1}
                 value={
                   peronsalDetails.branch_name ? peronsalDetails.branch_name : ""
@@ -150,6 +154,7 @@ const EditBankDetails = ({
                 borderWidth={1}
                 value={peronsalDetails.ctc ? peronsalDetails.ctc : ""}
                 onChange={handleChange}
+                required
               />
             </FormControl>
 

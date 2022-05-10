@@ -115,7 +115,7 @@ const ProfileDetails = ({ startEditing }) => {
           document.pan_card_num.slice(document.pan_card_num.length - 4)
       );
 
-    setIsVerified(userData.is_verified);
+    setIsVerified(userData.verified);
   };
 
   return (

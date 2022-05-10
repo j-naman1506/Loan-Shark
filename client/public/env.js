@@ -225,7 +225,7 @@ window.env = {
   "PSModulePath": "C:\\Users\\HP\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules;C:\\Program Files (x86)\\Microsoft SQL Server\\150\\Tools\\PowerShell\\Modules\\",
   "PT6HOME": "D:\\Cisco Packet Tracer 6.2sv",
   "PUBLIC": "C:\\Users\\Public",
-  "REACT_APP_SERVER_URL": "https://flip-loan-app-server.herokuapp.com",
+  "REACT_APP_SERVER_URL": "http://192.168.137.230:8000",
   "REACT_APP_SITE_URL": "http://localhost:3000",
   "RegionCode": "APJ",
   "SESSIONNAME": "Console",
