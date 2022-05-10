@@ -1,7 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ApplicationCard from "./ApplicationCard";
-
+import axios from "../utils/axios";
+import { requests } from "../utils/requests";
 const ListOfApplication = () => {
+  const [myApplication, setApplication] = useState();
+  useEffect(() => {
+    // async function getMyApplications() {
+    //   const request = await axios.get(requests["getMyApplications"]);
+    //   return request;
+    // }
+    // getMyApplications
+    //   .then((res) => {
+    //     const data = res.data.data;
+    //     setApplication(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     alert("Something Went Wrong");
+    //   });
+  }, []);
   const applications = [
     {
       amount: "300",

@@ -9,5 +9,7 @@ export const requests = {
   getDocuments: "/api/document/",
   getBankDetails: "/api/account/",
   createApplication: "/api/application/",
+  getMyApplications: "/api/application/me/",
+
   getOffers: "/api/offer/",
 };

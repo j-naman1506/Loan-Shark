@@ -204,7 +204,7 @@ const ProfileDetails = ({ startEditing }) => {
                   onClick={(e) => {
                     saveAs(
                       window.env.REACT_APP_SERVER_URL + aadhar_link,
-                      "aadhar.pdf"
+                      "Aadhar.pdf"
                     );
                   }}
                 />
@@ -230,7 +230,7 @@ const ProfileDetails = ({ startEditing }) => {
                   onClick={(e) => {
                     saveAs(
                       window.env.REACT_APP_SERVER_URL + pan_link,
-                      "pan.pdf"
+                      "Pan.pdf"
                     );
                   }}
                 />

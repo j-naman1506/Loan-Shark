@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Icon, Text } from "@chakra-ui/react";
 import { BsPeopleFill } from "react-icons/bs";
 import { shade } from "./../../static/templates/colors";
 import { useState } from "react";
+import axios from "../utils/axios";
+import { requests } from "../utils/requests";
+
 function ApplicationCard({ application }) {
   const { amount, tenure, interestRate, createdAt, count } = application;
+  const [offers, setOffers] = useState();
   const [expanded, setExpanded] = useState(false);
+  useEffect(() => {
+    // async function getOffers() {
+    //   const request = await axios.get(
+    //     requests["createApplication"] + application.id + "/offers/"
+    //   );
+    //   return request;
+    // }
+    // getOffers
+    //   .then((res) => {
+    //     const data = res.data.data;
+    //     setOffers(data);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     alert("Something Went Wrong");
+    //   });
+  }, []);
+  function handleDelete() {
+    // async function deleteApplication() {}
+  }
   const offer = [
     {
       id: 1,
@@ -70,6 +94,7 @@ function ApplicationCard({ application }) {
               borderWidth: 1,
             }}
             size="md"
+            onClick={handleDelete}
           >
             Delete
           </Button>
